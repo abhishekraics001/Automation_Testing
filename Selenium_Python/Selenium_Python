@@ -1,0 +1,461 @@
+Selenium : Python
+
+
+Element Types
+1. find_element() => will retrun single & 1st element only
+	element = driver.find_element(BY.XPATH, "//div[@class='footer']//a")  //will print the first link element
+	textValue = element.text
+
+	OR 
+
+	login_element = driver.find_element(By_LINK_TEXT, "Login Text")  //if eleme twill avilable then it return others wise throu an exception "No such element"
+
+
+2. finds_elements() => will return list /  multiple elements
+	elemets =  driver.find_elements(By_XPath, "//input[@id=small-searchitems]")
+	myElement = elemets[0]
+	text = myElement.text
+	myElement.send_keys("My XYZ details")
+
+	OR 
+
+	elements = driver.find_element(BY.XPATH, "//div[@class='footer']//a")  //will print the first link element
+	length = elments[0]
+	for ele in elements:
+	  print(ele.text)
+
+
+
+
+Text Vs Atributes
+
+	emailBox = find_element(By-XPATH, "//input[@id='email']")
+	emailBox.clear()
+	emailBox.send_keys("xyz@gmail.com)
+1. Text: Return inner text of the element. it will retrun only text not inner text. used basically with text/label or any predefiled text but not with input text
+	textValue = emailBox.text
+
+2. Atribute: Retrun value of any attribute of web element. it will retrun inner text. used basically with input
+	textValue = emailBox.get_attribute('value')
+
+
+Days 4: XPath axes
+1. self : 
+Node is nothing but like element. The node it self is self. every node is self node.
+
+
+2. parent : Traverse Parent element of current html tag
+current parrrent of element is parrent
+Example: //*[atribute='value']parent::tagname
+
+
+3. child : Traverse all child element of the current html tag.
+child of node is know as child
+Example: //*[atribute='value']child::tagname
+
+
+4. ancestor : Traverse all the ancestor elements (grandparent, parent, etc) of the current html tag
+element parent and his parent is know ancestor means grand fathers
+Example: //*[atribute='value']/ancestor::tagname
+
+
+6. descendant : element child and his child is know descendant means grand child
+
+
+7. following : Traverse all element that comes after the current tag
+whatever element(All) is on top - right of current node/elemt is following node
+Example: //*[atribute='value']following::tagname
+
+
+8. following-sibling : Thaverse from the current html tag to next sibling html tag
+whatever element(only current top) is on right - top of current node/elemt is following node
+Example: //current html tag[@attribute='value']/following::sibling tag[@atribute='value']
+
+
+
+
+9. preceding : Traverse all nodes that come before the current html tag
+whatever element(All) is on top - left of current node/elemt is following node
+Example: //*[atribute='value']preceding::tagname
+
+
+10. preceding-sibling : Traverse from current html tag tp previous sibling html tag
+whatever element(only current top) is on lef - top of current node/elemt is fol
+Example: //current html tag[@attribute='value']/preceding::previous tag[@atribute='value']
+
+
+
+
+
+
+
+Comamnds 
+1. Get / application Commands:
+	
+	i. get => To open the application url
+	ii. titel => To capture the current page Title
+		pageTitel = driver.title
+		
+	iii. current_url  => To capture the current page URL
+		currentPageURL = driver.current_url
+
+	iv. page_source => to capture  the current page sources code
+		currentPageSourceCode = driver.page_source
+
+
+
+
+
+2. Condinal Comamnds
+	i. is_displayed() => to capture the element status is displayed or not
+		searchBox = driver.find_element(BY.XPATH , "//input[@search]")
+		isDisplay = searchBox.is_displayed()
+
+
+	ii. is_enabled() => to capture the element status is enabled or not
+		searchBox = driver.find_element(BY.XPATH , "//input[@search]")
+		isDisplay = searchBox.is_enabled()
+
+
+	iii. is_selected() => is is basicallyed used with Radio Button & checkBox
+		isMaleRadioButtton = driver.find_element(By_XPATH, "//[@id='male']")
+		isSelctedORNot = isMaleRadioButtton.is_selected() 
+		isMaleRadioButtton.click()
+		isSelctedORNot = isMaleRadioButtton.is_selected()
+
+	 
+
+
+3. Browser Commands
+	i. close() =>  supposes we have a link which open another page / tabe in browser
+	 and want to closed. by using the close command it's closed parent browser windoes / tab but not current or newaly open
+			driver.closed()
+	ii. quit() => upposes we have a link which open another page / tabe in browser and want to closed the all browser / tab / windwoses
+			driver.quit()
+
+
+4. Navigationa Commands
+	i. back() => to navigate the previous page if any in history
+		driver.back()
+	ii. forward() => to navigate the next page if any in history
+		driver.forward()
+	iii refresh() => refresh the page  or url
+		driver.refresh()
+
+
+5. Wait Commands
+	time.sleep(5) : We also use this method for stop the execution for particular time but it's not recomanded
+		
+
+	i. implicit wait : Implicit waits are used to provide a default(0 second) waiting time (say 10 seconds) between each consecutive test step/command across the entire test script. Thus, the subsequent test step would only execute when the 10 seconds have elapsed after executing the previous test step/command
+		Adv. Single statement. Performance will not be reduce. (if the element is avilable within the time it proceed to execute forther)
+		
+		Dis: If the element is not avilable within the time mentioned, still there is a chance of getting exception
+
+		service_obj = Service("Your chrome driver .exe path")
+		driver= driver.webdriver.Chrome(service=service_obj)
+
+		driver.implicitly_wait(10)
+		
+		driver.get(https://www.google.com/)
+		driver.maximize_window();
+		searchBox = driver.find_element(By_NAME, "q")
+		searchBox.send_kyes("Selenium")
+		searchBox.submit()
+
+		
+		searchBox.find_element(By_XPATH, "//h3[text()='Selenium']").click()
+
+	
+
+	ii. explicit wait: Explicit wait work based on condition
+		service_obj = Service("Your chrome driver .exe path")
+		driver= driver.webdriver.Chrome(service=service_obj)
+
+		myWait = WebDriverWit(driver, 10)
+
+		OR 
+
+		myWait = WebDriverWit(driver, 10, ignore_exception=[NoSuchElementException, ElementNotVisibleException, ElementNotSelectableException, Exception])
+		
+		driver.get(https://www.google.com/)
+		driver.maximize_window();
+		
+		earchBox = driver.find_element(By_NAME, "q")
+
+		searchBox.send_kyes("Selenium")
+		searchBox.submit()
+
+		
+		searchBoxLink = myWait(EC.presence_of_element_located(By_XPATH, "//h3[text()='Selenium']")))
+		searchBoxLink.click()
+
+
+
+
+
+
+CheckBox 
+	Simgle checkBox
+		driver.find_element(By_XPATH, "//input[@id='monday']").click()
+
+	Multiple checkBox List
+	Aproch-1
+		checkBoxList = driver.find_element(By_XPATH, "//input[@type='checkboz' and contains(@id, 'day')]")
+ 		
+		for i in range(len(checkBoxList )){
+			checkBoxList[i].click()
+		}
+
+		OR
+		for checkBox in checkBoxList {
+			checkBox.click()
+		}
+
+
+	Aproch-2
+		for checkBox in checkBoxList {
+			weekname =  checkBox.get_attribute('id')
+			if(weekname =='monday' || weekname == 'sunday'){
+				checkBox.click()
+			}
+		}
+
+
+RadioBox
+
+//Wil return the list of element of dropdown
+countryElement = driver_find_element(By_XPATH, "//select[@id='input-country']")
+droCountry = Select(countryElement)  
+OR 
+droCountry = Select(driver_find_element(By_XPATH, "//select[@id='input-country']"))  
+
+//Select the option from the dropDown
+droCountry.select_by_visible_text('India')
+droCountry.select_by_value("2")
+droCountry.select_by_index(2)
+
+
+//capture all the options and print them
+allOption =  droCountry.options
+print("Total Options: ", len(allOption))
+
+//Iterate all options
+for iption in allOption 
+	print("Option: ", iption)
+
+
+
+
+Link
+
+//Click on link
+driver.find_element(By_LINK_TEXT, "Digital download").click()
+driver.find_element(By_PARTIAL_LINK_TEXT, "Digital").click()
+
+
+//find number of links in a page
+lisOfLink = driver.find_element(By_TAG_NAME, 'a')
+for link in lisOfLink:
+	print(link.text)
+
+
+1. Internal: 
+	
+
+2. External: 
+	
+	
+3. Broken Link: 
+
+
+
+
+
+Alert / Popup: 
+Link using - https://the-internet.herokuapp.com/javascript_alerts
+	driver.find_element(By_XPATH, "//button[normalize-space()='click for JS Prompt']")
+	driver.sleep(5)
+
+	alertWindow = driver.switch_to.alert  //Swich control to alert windows
+	
+	text = alertWindow.text  //for get the text
+	
+	alertWindow.send_keys("welcome")  //send the input in your popup windos
+	
+	alertWindow.accept() //Closed the alert window by press OK button
+
+	alertWindow.dismiss()  //closed the window by using cancel button
+
+
+
+
+
+Authentication Popup / Custome Popup
+Link: https://the-internet.herokuapp.com/basic_auth
+
+	//Use the userName:userPassword@ in the same ur
+	driver.get("https://userName:userPassword@the-internet.herokuapp.com/basic_auth")
+
+
+
+
+Frames/ iFrames / Form
+Link: https://www.selenium.dev/selenium/docs/api/java/index.html?overview-summary.html	
+	i. switch_to.frame(name of frame)
+	ii. switch_to_frame(id of the frame)
+	iii. switch_to_frame(webelement)
+	iv. switch_to_frame(index of frame)
+	v. switch_to_default_content()
+
+	driver.switch_to.frame("packageListFrame")
+	driver.find_element(By.LINK_TEXT, 'org.openqa.selenium').click()
+	driver.switch_to_default_content() // Go back to main page
+	
+	
+	driver.switch_to.frame("packageFrame")
+	driver.find_element(By.LINK_TEXT, 'WebDriver')
+	driver.switch_to_default_content() // Go back to main page
+
+
+	driver.switch_to.frame("classFrame")
+	driver.find_element(By.XPATH, "/html/body/header/nav/div[1]/div[1]/ul/li[8]").click()
+	driver.switch_to_default_content() // Go back to main page
+
+
+Inner Frame
+Link: https://demo.automationtesting.in/Frames.html
+
+	driver.get("https://demo.automationtesting.in/Frames.html")
+	driver.find_element(By_XPATH, "//a[normalize-space()='iframe with in aan iframe']").click()
+
+	outerFrame = driver.find_element(bY_xpath, "//iframe[@src='MultipleFrames.html']")
+	driver.switch_to.frame(outerFrame)
+
+	innerFrame = driver.find_element(By.XPATH, "/html/body/selection/div/div/iframe")
+	driver.switch_to_frame(innerFrame)
+
+	driver.fin_element(By.XPATH, "//input[@type=''text]").send_keys("welcome")
+
+	
+
+Switch B/W Browser Windows
+link = https://opensource-demo.orangehrmlive.com/web/index.php/auth/login
+driver.get(link)
+driver.maximize_window()
+
+	i. current_window_handle  --> Return windowID of single browser window
+		currentWind = driver.current_window_handle
+
+	ii. window_handle --> Return window ID's of multiple browser windows
+		driver.find_element(By_LINK_TEXT, "OrangeHRM, Inc").click()
+		windowIDList = driver.window_handle
+		print(windowIDList[0] , windowIDList[7])
+
+	i. switch_to.window(windows_id)
+		driver.switch_to.window(driver.window_handle[index])
+		driver.switch_to.window(driver.window_handle[1])
+		driver.switch_to.window(windowIDList[1])
+
+
+
+
+System Popup / Alert / Windows
+
+ops = webdriver.ChromeOptions()
+ops.add_argument("--disable-notificatins")
+
+serv_obj =  Service("chromedriver.exe")
+drivr = webdriver.Chrome(service=serv_obj, options=ops)
+ 
+
+link = https://whatmylocation.com/
+driver.get(link)
+driver.maximize_window()
+
+
+
+
+
+
+
+Table
+link = https://testautomationpractice.blogspot.com/
+driver.get(link)
+
+	1. Count No of Row & Colums
+		noOfRow = driver_find_elements(By.XPATH, "//table[@name='BookTable']//tr")
+	
+
+	2. Count No of Row & Colums
+		noOfColums = driver_find_elements(By.XPATH, "//table[@name='BookTable']//tr[0]/th")
+	
+
+	3 Read spesific Row & colum value
+		textVal= driver_find_elements(By.XPATH, "//table[@name='BookTable']/tbody/tr[3]/th[2]").text
+
+
+	4. Read all rows & colums Data
+		for r in range(2, noOfRow + 1):
+		    for c in range(1, noOfColums + 1):
+			textVal= driver_find_elements(By.XPATH, "//table[@name='BookTable']/tbody/tr["+str(r)+"]/th["+str(c)+"]").text
+
+
+	5. Read the data based on conditions
+		for r in range(2, noOfRow + 1):
+		    authName= driver_find_elements(By.XPATH, "//table[@name='BookTable']/tbody/tr["+str(r)+"]/th[2]").text
+			if authName == "Mukesh":
+			     bookName = driver_find_elements(By.XPATH, "//table[@name='BookTable']/tbody/tr["+str(r)+"]/th[1]").text
+			     bookPrice = driver_find_elements(By.XPATH, "//table[@name='BookTable']/tbody/tr["+str(r)+"]/th[4]").text
+
+		
+
+Example:
+link = https://opensource-demo.orangehrmlive.com/web/index.php/auth/login
+driver.get(link)
+	driver.find_element(By_ID, "textUsername").send_keys("Admin")
+	driver.find_element(By_ID, "textPassword").send_keys("admin123")
+	driver.find_element(By_ID, "btnLogin").click()
+	time.sleep(5)
+
+	//After login -> Move to page => admin --> user management --> users
+	driver.find_element(By_XPATH, "//*[@id='menu_admin_viewAdminModel']/ ").click()
+	
+	driver.find_element(By_XPATH, "//*[@id='menu_admin__UserManagement']").click()
+
+	driver.find_element(By_XPATH, "//*[@id='menu_admin__viewSystemUsers']").click()
+
+	#total number of rows in colums
+	totalRows = driver.find_element(BY_XPATH, "//table[@id='resultTable']//tbody/tr")
+
+	for r in range(1, totalRows + 1):
+	    status = driver.find_element(BY_XPATH, "//table[@id='resultTable']//tbody/tr["+str(r)+"]/td[5]").text
+		if status=="Enabled"
+			print("Enabled")
+	
+
+	
+
+
+Date Picker
+1. Standard : 
+	link = https://jqueryui.com/datepicker/
+	driver.get(link)
+	driver_maximize_windows()
+
+	driver.switch_to_frame(0)
+
+	//driver_find_element(BY.XPATH, "//*[@id='datepicker']").send_keys("05/03/2023 ")
+	yesr = 2023
+	month = "March"
+	date = "30"
+	driver_find_element(BY.XPATH, "//*[@id='datepicker']").click()
+	
+
+2. Non-Standard (Customized) : 
+
+
+
+
+Mouse Opration: 
+1. ActionChains
