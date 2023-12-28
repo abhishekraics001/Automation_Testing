@@ -1,0 +1,1082 @@
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+What is Appium
+	Appium is an open-source automation mobile testing tool, which is used to test the application. It is developed and supported by Sauce Labs to automate native and hybrid mobile apps. 
+	It is a cross-platform mobile automation tool, which means that it allows the same test to be run on multiple platforms. Multiple devices can be easily tested by Appium in parallel.
+	Appium is used for automated testing of native, hybrid, and web applications. It supports automation test on the simulators (iOS) and emulators (Android) as well as physical devices (Android and iOS both). Previously, this tool mainly focused on IOS and Android applications that were limited to mobile application testing only. Few updates back, Appium declared that it would now support desktop application testing for windows as well.
+	It supports several languages such as Java, PHP, Objective C, C#, Python, JavaScript with node.js, and Ruby, and many more that have Selenium client libraries. Selenium is the backend of Appium that provides control over the functionality of Selenium for testing needs.
+	
+	Appium is an ‘HTTP Server’ written using a Node.js platform and drives iOS and an Android session using Webdriver JSON wire protocol. Hence, before initializing the Appium Server, Node.js must be pre-installed on the system.
+	When Appium is downloaded and installed, then a server is set up on our machine that exposes a REST API.
+	It receives connection and command request from the client and executes that command on mobile devices (Android / iOS).
+	It responds back with HTTP responses. Again, to execute this request, it uses the mobile test automation frameworks to drive the user interface of the apps. A framework like:-
+	Apple Instruments for iOS (Instruments are available only in Xcode 3.0 or later with OS X v10.5 and later)
+	Google UIAutomator for Android API level 16 or higher
+	Selendroid for Android API level 15 or less
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Appium Architecture
+	https://static.javatpoint.com/tutorial/appium/images/appium-architecture.png
+		1. Selenium(Client lib & all the Jars files): Selenium act as a client and send command (http request) to appium server via JSON wire Protocal. JSON wire protocal contains all the capabilities and Configuraction set in code.
+		2. Appium(Appium Server written in Node.Js): Appium Server then creates a automation session for the client and also checks the desired capabilities of client and then Appium server send server request to UIAuomator(Android) OR UIAuomation(IOS)
+		3. UIAutomator(UIAuomator & UIAuomation): This frameworks will then commmunicate with bootstrap.jar which is running in Emulator / real Device for performing client operation.
+		4. App
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+	
+	
+	
+	
+	
+	
+	
+-------------------------------------------------------------------------------------------------------------------------------------------------------	
+Appium vs Robotium
+	Appium is a cross-platform tool that supports both iOS and Android. Whereas Robotium only supports Android.
+	Appium supports various languages while Robotium only supports Java programming language.
+	Appium does not require application source code/library, whereas Robotium tool requires application source code or library.
+	Appium can be used to test native, web, and hybrid mobile applications, whereas Robotium can only test native and hybrid applications.
+	Appium supports many frameworks like Selenium. But Robotium is not compatible with Selenium at all.
+	In Appium, you don't have to reinstall the application for a small change. But Robotium code leads to complete rebuild for a small change.
+
+
+Appium vs Selendroid
+	Appium is an open-source automation tool that supports both iOS and Android, while Selendroid is a test automation framework that only supports Android.
+	In Appium, a small change does not require reinstallation of the application. But Selendroid requires reinstallation of the application.
+	Appium has a strong and active community, whereas Selendroid does not have a strong community like Appium.
+	Appium supports many frameworks and languages. On the other hand, Selendroid is compatible with Jenkin and Selenium.
+	Appium does not require application source code/library, while Selendroid requires application source code or library.
+	Appium supports all Android APIs with a limitation. Appium uses UIAutomator for tests running on API>=17, while for older APIs, it runs tests using Selendroid.
+-------------------------------------------------------------------------------------------------------------------------------------------------------	
+	
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Appium Installtion:
+1. Install th Node.js 
+	i.	Download Appium from below link and install it
+			https://nodejs.org/en/download
+		
+	ii. check the current version of node & npm 
+			node -v :Current version => v20.10.0
+			npm -v	:Current version => 10.2.3
+
+2. Install stable version of Appium Globally
+	i. Download & install Appium
+			npm install -g appium@next
+
+	ii.  To start & Check the current version of appium
+			appium
+
+	iii. To stop the Appium
+			Ctrl + C
+		
+	iv. Find the install location / folder 
+			where appium
+		
+	v. To uninstall appium 
+			npm uninstall appium
+		
+	vi. Appium Help Command
+			appium --help
+			
+			appium driver --help
+			
+			appium driver list
+			
+3.	Install Aappium UIAutomator2 driver through CLI
+		i.	Download & install UIAutomator2
+				appium driver install uiautomator2
+
+4. Install Appium Inspector
+		i. Download & install from: Current Verion => 2023.11.1
+				https://github.com/appium/appium-inspector/releases
+				
+				
+5.  Download & install Java JDK : Verion 15
+		i.	Download Jva 15 from below link	
+				https://www.oracle.com/java/technologies/downloads/archive/
+		ii. Edit the system variable for set the JAVA path
+				a) 	Go Computer
+				b)	Right Click
+				c)	Property
+				d) 	Enviroment Variable
+				e)  New Varible
+					1) Name => JAVA_HOME
+					2) JDK Path => Pest your JDK PATH || C:\Program Files\Java\jdk-15.0.2
+					3) Save
+				f) 	Click on "PATH" in system variable 
+				g) 	Edit
+				h)	Add new Entry
+					1) %JAVA_HOME%\bin
+					2) ok
+				i) ok
+		iii. Check the Java version
+				java -version
+				
+				
+6. 	Install Android Studio and Configraction
+		i. 		Download & Install from below link		
+					https://developer.android.com/studio?gclid=EAIaIQobChMIhJmf-LnmggMVrA2DAx3QVAvLEAAYASAAEgII4PD_BwE&gclsrc=aw.ds
+		ii. Go to SDK Manager & Install required SDK
+				1.	SDK plateform	
+						Latest version of android API
+				2. SDK Tools
+						Android SDK build tools
+						Android SDK plateform tools
+						Android Emulator
+						Android SDK command Line tools
+						USB Driver
+						Intel X86 
+						Intel Hardware Accelerated Execution Manager(HAXM)
+						Emulator
+						Android Emulator Hypervisor Driver for AMD processor
+						
+				
+		ii. 	Add Android Enviroment Variable
+					Name: ANDROID_HOME
+					Value: C:\Users\T0185CK\AppData\Local\Android\Sdk
+						   C:\Users\T0185CK\AppData\Local\Android\Sdk
+					
+					Cmd Example: 
+					setenv ANDROID_HOME C:\Users\T0185CK\AppData\Local\Android\Sdk
+					setenv PATH $PATH\:$ANDROID_HOME/tools\:$ANDROID_HOME/tools/bin\:$ANDROID_HOME/platform-tools
+					
+		iii.	Add new Entry for plateform tools
+					1) %ANDROID_HOME%\platform-tools
+					2) ok
+					
+					Cmd Example:  
+					setenv PATH $PATH\:$ANDROID_HOME/tools\:$ANDROID_HOME/tools/bin\:$ANDROID_HOME/platform-tools
+		iii.	Add new Entry for cmdline tools
+					1) %ANDROID_HOME%\cmdline-tools
+					2) ok
+					
+					Cmd Example:  
+					setenv PATH $PATH\:$ANDROID_HOME/tools\:$ANDROID_HOME/tools/bin\:$ANDROID_HOME/platform-tools
+		iv.		ok
+		v. Create AVD & Start
+		
+7. Create Driver Session
+		i. start appium server
+				appium
+		ii. Start Emulator
+		iii. Open UI Automator and selct Appium Server
+				1. 	IP(Appium Server IP and for local Put default ip)
+				2 	Port No(Put port No and  for local keep default)
+				3. 	Desired capability
+						automationName: uiautomator2
+						plateformName: Android
+						deviceName: pixel_5
+						app: apk_path
+		iv. start session
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+		
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+Important setup notes
+
+-> Be an admin rights on your Windows/Mac
+-> Use latest Windows/MacOS operating system
+-> Office machine? make sure anti-virus and company policies are not blocking installation of Appium and associated softwares
+-> If practicing using an Android emulator, use a powerful processor and sufficient RAM
+-> Avoid using phone from Chinese manufacturers that may restrict Appium due to their security limitations
+
+
+
+Install Appium Command Line Interface (CLI) server
+==================================================
+Commands to check if node and NPM (Node Package Manager) are installed:
+		node -v
+		npm -v
+		
+Install node.js (NPM is included) from link - https://nodejs.org/en/download/
+
+
+Important note: Use the LTS and not current version.
+Install Appium using npm: 
+			npm install -g appium@next
+		
+		
+		Note: @next will not be required once Appium 2.0 stable release is out to market.
+			Command to install specific version: npm install -g appium@<verion_number>
+			Command to start Appium: appium
+			Command to get installation location: where appium
+			Command to uninstall Appium: npm uninstall -g appium
+
+
+
+Install UiAutomator2 driver (using Appium CLI)
+	Get help: 
+			appium driver --help (or -h)
+			
+	Get list of officially supported drivers: 
+			appium driver list
+			
+	Install driver: 
+			appium driver install uiautomator2
+			
+	Install driver with specific version: 
+			appium driver install uiautomator2@<version_number>
+
+
+
+
+Install Appium Inspector
+========================
+Download and install from https://github.com/appium/appium-inspector/releases
+
+
+
+Install JAVA JDK and configure environment variables
+====================================================
+Command to check if JAVA is already installed: 
+		java -version
+		
+JAVA JDK download link: https://www.oracle.com/technetwork/java/javase/downloads/index.html
+		Important note: Please use Java 8/11/15 for now. Don't use Java 16 or higher. The current Appium Java Client 8.x.x is not compatible with Java 16+. You may use Java 16+ once Appium Java client becomes compatible.
+
+Create JAVA_HOME system environment variable and set it to JDK path (without bin folder). 
+		Edit PATH system environment variable and add %JAVA_HOME%\bin
+		Note: Usually JDK path is "C:\Program Files\Java\<your_jdk_version>"
+
+
+
+Install Android Studio and configure environment variables
+==========================================================
+ Android Studio download link: https://developer.android.com/studio
+	Create ANDROID_HOME system environment variable and set it to SDK path. 
+	Edit PATH system environment variable and add below,
+			%ANDROID_HOME%\platform-tools
+			%ANDROID_HOME%\cmdline-tools
+
+
+
+Verify installation using appium-doctor
+=======================================
+Command to install appium-doctor: 
+		npm install -g appium-doctor
+		
+Command to get help: 
+		appium-doctor --help
+		
+Command to check Android setup: 
+		appium-doctor --android 
+
+
+
+Emulator Setup: Accelerate Performance
+======================================
+Launch Android Studio -> SDK Manager -> SDK Tools
+Intel processor: Check "Intel x86 Emulator Accelerator (HAXM Installer)" and Apply
+AMD processor: Check "Android Emulator Hypervisor Driver for AMD Processors (installer)" and Apply
+
+
+
+Emulator Setup: Create AVD and start it 
+=======================================
+Important note: AVDs are resource hungry! Please use a laptop with powerful processor (that supports Intel HAXM/AMD hypervisor) and sufficient RAM.
+Open Android Studio -> Configure -> Virtual Device Manager -> Create Virtual Device -> 
+Select Model -> Download Image for desired OS version if not already downloaded 
+-> Start AVD
+
+
+Emulator Setup: Create Driver Session using Appium CLI
+======================================================
+Download link for dummy app:
+https://github.com/appium/appium/tree/master/packages/appium/sample-code/apps
+[Also available for download from the lecture's resources section]
+
+
+Real Device Setup: Enable USB debugging on Android mobile
+========================================================
+Note: Steps can differ based on the phone manufacturer!
+-> Settings -> System -> About Phone -> Click Build Number 7-8 times
+-> Settings -> Developer Options -> Enable USB Debugging
+-> Permission pop-up: Check the box and press Allow to recognise the computer
+-> run "adb devices" in CMD prompt to check if device is recognised
+-> USB drivers:
+Google: https://developer.android.com/studio/run/win-usb
+OEMs: https://developer.android.com/studio/run/oem-usb
+
+
+Real Device Setup: Create Driver Session using Appium CLI
+=========================================================
+Download link for dummy app:
+https://github.com/appium/appium/tree/master/packages/appium/sample-code/apps
+[Also available for download from the lecture's resources section]						
+------------------------------------------------------------------------------------------------------------------------------------------------------	
+	
+	
+	
+	
+	
+	
+	
+	
+------------------------------------------------------------------------------------------------------------------------------------------------------		
+Appium driver management (using Appium CLI)
+==========================================
+List driver:
+-> appium driver list
+-> appium driver list --installed
+-> appium driver list --updates
+
+Install driver:
+-> appium driver install <official_driver_name>
+-> appium driver install <official_driver_name>@<specific_version_number>
+-> appium driver install --source <source> --package <name>
+source: npm (default), github, git, local
+package: customDriver@1.0.0
+Examples:
+-> appium driver install --source npm appium-uiautomator2-driver
+-> appium driver install --source git https://github.com/appium/appium-uiautomator2-driver.git --package appium-uiautomator2-driver
+-> appium driver install --source github appium/appium-uiautomator2-driver --package appium-uiautomator2-driver
+
+Uninstall driver:
+-> appium driver uninstall <official_driver_name>
+
+Update driver:
+-> appium driver update uiautomator2
+-> appium driver update --unsafe
+-> appium driver update installed	
+	
+	
+	
+	
+Links (Desired capabilities are located under respective GitHub pages of the drivers)
+------
+UiAutomator2 (Android) capabilities: 
+https://github.com/appium/appium-uiautomator2-driver?#capabilities
+
+XCUITest (iOS) capabilities: 
+https://github.com/appium/appium-xcuitest-driver#capabilities
+
+--------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+Important setup notes
+=====================
+-> Be an admin on your Windows/Mac
+-> Use latest Windows/MacOS operating system
+-> Office machine? make sure anti-virus and company policies are not blocking installation of Appium and associated softwares
+-> If practicing using an Android emulator, use a powerful processor and sufficient RAM
+-> Avoid using phone from Chinese manufacturers that may restrict Appium due to their security limitations
+
+
+Install Appium Command Line Interface (CLI) server
+==================================================
+-> Commands to check if node and NPM (Node Package Manager) are installed:
+node -v
+npm -v
+-> Install node.js (NPM is included) from link - https://nodejs.org/en/download/
+Important note: Use the LTS and not current version.
+-> Command to install Appium using npm: npm install -g appium@next
+Note: @next will not be required once Appium 2.0 stable release is out to market.
+-> Command to install specific version: npm install -g appium@<verion_number>
+-> Command to start Appium: appium
+-> Command to get installation location: where appium
+-> Command to uninstall Appium: npm uninstall -g appium
+
+
+Install UiAutomator2 driver (using Appium CLI)
+=============================================
+Get help: appium driver --help (or -h)
+Get list of officially supported drivers: appium driver list
+Install driver: appium driver install uiautomator2
+Install driver with specific version: appium driver install uiautomator2@<version_number>
+
+
+Install Appium Inspector
+========================
+-> Download and install from https://github.com/appium/appium-inspector/releases
+
+
+Install JAVA JDK and configure environment variables
+====================================================
+-> Command to check if JAVA is already installed: java -version
+-> JAVA JDK download link: https://www.oracle.com/technetwork/java/javase/downloads/index.html
+Important note: Please use Java 8/11/15 for now. Don't use Java 16 or higher. The current Appium Java Client 8.x.x is not compatible with Java 16+. You may use Java 16+ once Appium Java client becomes compatible.
+-> Create JAVA_HOME system environment variable and set it to JDK path (without bin folder). 
+Edit PATH system environment variable and add %JAVA_HOME%\bin
+Note: Usually JDK path is "C:\Program Files\Java\<your_jdk_version>"
+
+
+Install Android Studio and configure environment variables
+==========================================================
+-> Android Studio download link: https://developer.android.com/studio
+-> Create ANDROID_HOME system environment variable and set it to SDK path. 
+Edit PATH system environment variable and add below,
+%ANDROID_HOME%\platform-tools
+%ANDROID_HOME%\cmdline-tools
+
+
+Verify installation using appium-doctor
+=======================================
+Command to install appium-doctor: npm install -g appium-doctor
+Command to get help: appium-doctor --help
+Command to check Android setup: appium-doctor --android 
+
+
+Emulator Setup: Accelerate Performance
+======================================
+Launch Android Studio -> SDK Manager -> SDK Tools
+Intel processor: Check "Intel x86 Emulator Accelerator (HAXM Installer)" and Apply
+AMD processor: Check "Android Emulator Hypervisor Driver for AMD Processors (installer)" and Apply
+
+
+Emulator Setup: Create AVD and start it 
+=======================================
+Important note: AVDs are resource hungry! Please use a laptop with powerful processor (that supports Intel HAXM/AMD hypervisor) and sufficient RAM.
+Open Android Studio -> Configure -> Virtual Device Manager -> Create Virtual Device -> 
+Select Model -> Download Image for desired OS version if not already downloaded 
+-> Start AVD
+
+
+Emulator Setup: Create Driver Session using Appium CLI
+======================================================
+Download link for dummy app:
+https://github.com/appium/appium/tree/master/packages/appium/sample-code/apps
+[Also available for download from the lecture's resources section]
+
+
+Real Device Setup: Enable USB debugging on Android mobile
+========================================================
+Note: Steps can differ based on the phone manufacturer!
+-> Settings -> System -> About Phone -> Click Build Number 7-8 times
+-> Settings -> Developer Options -> Enable USB Debugging
+-> Permission pop-up: Check the box and press Allow to recognise the computer
+-> run "adb devices" in CMD prompt to check if device is recognised
+-> USB drivers:
+Google: https://developer.android.com/studio/run/win-usb
+OEMs: https://developer.android.com/studio/run/oem-usb
+
+
+Real Device Setup: Create Driver Session using Appium CLI
+=========================================================
+Download link for dummy app:
+https://github.com/appium/appium/tree/master/packages/appium/sample-code/apps
+[Also available for download from the lecture's resources section]
+---------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+Appium Java - Desider Capabilities
+---------------------------------------------------------------------------------
+DesiredCapabilities cap = new DisiredCapabilities();
+
+cap.setCapability(MobileCapabilityType.PLATFORM_NAME, MobilePlatform.ANDROID);
+cap.setCapability("appPackage", "io.appium.apis");
+cap.setCapability("appActivity", "io.appium.android.apis.ApiDemos");
+
+AndroidDriver<MobileElement> driver = new AndroidDriver<MobileElement>(new URL("https://127.0.0.1:4723/wd/hub/"), cap)
+
+driver.manage().timeouts().implicilityWait(25, TimeUnit.SECONDS);
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+UIAutomator2 | Appium Inspector
+Create Driver Session
+		i. start appium server
+				appium
+				
+		ii. Start Emulator
+		iii. Open UI Automator and selct Appium Server
+				1. 	IP(Appium Server IP and for local Put default ip:127.0.0.1) 
+				2 	Port No(Put port No and  for local keep default: 4723)
+				3. Remote Path: /wd/hub
+				4. 	Desired capability
+						automationName: uiautomator2
+						plateformName: Android
+						deviceName: pixel_5
+						app: apk_path
+						appPackage: io.appium.apis
+						appActivity: io.appium.android.apis.ApiDemos
+		iv. start session
+		v. you will be able to access the or inspect the element
+---------------------------------------------------------------------------------------------------------------------------------------------------		
+		
+		
+		
+		
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+Start_Stop Appium Progammatically  using TestNG
+----------------------------------------------------------------------------------------------
+public class StartAppiumServer{
+
+	public static AppiumDriverLocalService service;
+	public static String NodeJSExePath = "c:\\programfile\\nodejs\\node.exe"
+	public static String AppiumJSPath = "c:\\users\\userName\\AppData\\Local\\Program\\Appium Server GUI\\resources\\app\\node_modules\\appium\\build\\lib\\main.js"
+	
+
+	@BeforeTest
+	publicvoid StartAppiumServer(){
+			AppiumDriverLocalService service = AppiumDriverLocalService.buildService(new AppiumServiceBuilder()
+									.usingDriverExecutable(new File(NodeJSExePath))
+									.withAppiumJS(new File("AppiumJSPath"))	
+									.withIPAddress("serverIPAddress")					//Like * -:  "127.0.0.1"
+									.withArgument(GeneralServiceFlag.BASEPATH, "/wd/hub")
+									.usingPort(4723)
+									.withLogFile(new File("logFileURL")) 				//Like * -:	  "c:\\users\\MYAppiumLogFile.text"
+									);
+									
+			service.start();
+	}
+	
+	
+	
+	@Test
+	public void lunchApp(){
+		DesiredCapabilities cap = new DisiredCapabilities();
+
+		cap.setCapability(MobileCapabilityType.PLATFORM_NAME, MobilePlatform.ANDROID);
+		cap.setCapability(MobileCapabilityType.NO_RESET, true)
+		cap.setCapability("appPackage", "io.appium.apis");
+		cap.setCapability("appActivity", "io.appium.android.apis.ApiDemos");
+		cap.setCapability(MobileCapabilityType.DEVICE_NAME, "emulator-5554")
+
+		AndroidDriver driver = new AndroidDriver(new URL("https://127.0.0.1:4723/wd/hub/"), cap)
+
+		driver.manage().timeouts().implicilityWait(25, TimeUnit.SECONDS);
+		
+		
+		WebElement text = driver.findElement(By.XPath("//android.wedget.TextView[@content-desc=\"Text\"]"))\
+		System.out.println(text.getText());
+		
+		text.click();
+	}
+	
+	
+	@AfterTest
+	public void TearDown(){
+		if(service.isRunning() == true){
+			service.stop();
+		}
+	}
+}
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+DesiredCapabilities
+
+DesiredCapabilities cap = new DisiredCapabilities();
+
+cap.setCapability(MobileCapabilityType.PLATFORM_NAME, MobilePlatform.ANDROID);
+cap.setCapability("appPackage", "io.appium.apis");
+cap.setCapability("appActivity", "io.appium.android.apis.ApiDemos");
+
+AndroidDriver<MobileElement> driver = new AndroidDriver<MobileElement>(new URL("https://127.0.0.1:4723/wd/hub/"), cap)
+
+
+
+
+
+-----------------------------------------------------------------------------------------
+Appium Java - Inspect Elements
+
+
+
+
+-----------------------------------------------------------------------------------------
+Appium Locators
+1. ID: 
+		Finding the elements using the ID is, by far the simplest technique.
+		Each elements has a unique ID assigned to it that helps in identifying and interacting with it.
+		Appium has a Native elements identifier for Android & IOS
+		
+		"resource-id" is used as an element identifier for Android name is used for IOS.
+		
+		Example: 
+			IOS: 	driver.findElemetByID("IntegerA").click();
+			Android: driver.findElemetB(By.id("android:id/text1")).click()
+		
+
+
+
+
+-----------------------------------------------------------------------------------------
+Accessibility ID
+		It is a highly preferref locator strategy, especially in case of automation Android & IOS test cases.
+		Developer can explicitly set the Accessibility ID during development.
+		As Accessibility ID can be used for cross-platform automation, the code become resuable
+		For IOS, the default Accessibility ID is set to the name of the UI element
+		For Android, the value of Accessibility is same as the value of the attribute "content-desc"
+		
+		Syntax:  driver.findElemetByAccessibility("YourAccessibilityName")
+		Example: driver.findElemetByAccessibility("AccessibilityName").click();
+			
+			
+			
+			
+			
+			
+-----------------------------------------------------------------------------------------
+Class Name
+		Using class Name for searching the element is very generic method. This is becouse multiple elements may have the same class name and this creates a problam in finding one particular elemt
+		
+		Example	
+			Syntax: driver.findElementByClassName("className"));
+				
+				
+				List<MobileElement> elements = driver.findElementByClassName("android.widget.TextView"));
+				
+				for(WebElement elements: elements){
+					if(element.getText().equals("Accessibility Details")){
+						element.click();
+						break;
+					}
+				}
+				
+				
+				#if you want to click on every items / elements
+				for(WebElement elements: elements){
+						Thred.sleep(2000)
+						element.click();
+						t=Thred.sleep(200)
+				}
+
+
+
+
+-----------------------------------------------------------------------------------------
+XPath: 
+		Through XPath program analyzes the XML structure of the app to loccate a particular element
+		
+		Syntax: Xpath=//tagname[@atribute='value']
+		Note: in Appium there is no tagname but heare class is consider as tagName like: Xpath=//android.widget.TextView[@index='3']
+		
+		Way / type to XPath : 
+			i. XPath using Index
+					Syntax: //tagname[@index='value']
+					Example: driver.findElemet(By.xpath("Xpath=//android.widget.TextView[@index='3']"));
+					
+			ii. XPath using Content Description:
+					Syntax: //tagname[@content-des='value']
+					Example:  driver.findElemet(By.xpath("Xpath=//android.widget.TextView[@content-des='Appium Videos']"));
+					
+			iii. XPath using resources-ID
+					Syntax: //tagname[@resource-id='value']
+					Example:  driver.findElemet(By.xpath("Xpath=//android.widget.TextView[@resource-id='android:id/textv1']"))
+					
+			iv.  XPath using Text 
+					Syntax :  //tagname[@text='value']
+					Example: 	driver.findElemet(By.xpath("//android.widget.Button[@text='Delete']")).click();
+					
+					
+			v. XPath Using Contains
+					Syntax: 	//*[contains@text,'char sequance']
+					Example: 	driver.findElemet(By.xpath("//android.widget.Button[contains(@text='Delete')]")).click();
+			
+
+
+			
+			
+			
+		XPath using boolean oprations
+			vii. XPath using OR
+					Syntax: //*[@atribute1='value' or @atribute2='value']
+					Example: driver.findElement(By.xpath("//*[text='Hello' or @index='6']")).click();
+					
+					
+			viii. XPath using AND
+					Syntax: 	//*[@atribute1='value'  AND @atribute2='value']
+					Example: driver.findElement(By.xpath("//*[text='Hello' and @index='6']")).click();
+					
+					
+			vix. xpath Using AndroidUIAutomator
+					Syntax: driver.findElementByAndroidUIAutomator("attribute('value')");
+					Example: driver.findElementByAndroidUIAutomator("text(\"Alpha Option 01\")").click();
+					
+					
+			vx.	 xpath using Elements Status
+					Syntax: TotalClickableElements =  driver.findElementByAndroidUIAutomator("new UISelector().clickable(true)").size();
+					Example: int totalClickableElements =  driver.findElementByAndroidUIAutomator("new UISelector().clickable(true)").size();
+					
+					
+			
+					
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+Tap on Elements
+-----------------------------------------------------------------------------------------------------
+
+
+		AndroidTouchAction touch = new TouchAction(driver);
+		
+		1. 	View
+				AndroidElement view = driver.findElementsByAccessibilityId("view");
+				touch.tap(TapOtions.tapOptions().withElement(ElementOption.element(view))).perform();
+
+
+		2.	Expandable Lists
+				AndroidElement expandableList = driver.findElementsByAccessibilityId("Expendable List");
+				touch.tap(TapOtions.tapOptions().withElement(ElementOption.element(expandableList))).perform();		
+		
+		
+		3.	Custom Adaptor
+				AndroidElement customAdaptor = driver.findElementByXPath("//android.widget.TextView[@text='1, Custom Adaptor']");
+				touch.tap(TapOtions.tapOptions().withElement(ElementOption.element(customAdaptor))).perform();	
+
+
+		4. Long Press
+				AndroidElement peopleName = driver.findElementByXPath("//android.widget.TextView[@text='Peple Names']");
+				LongPressOptions longPressOption =  new LongPressOptions();
+				longPressOption.withDuration(Duration.ofSeconds(5)).withElement(ElementOption.element(peopleName));
+				touch.longPress(longPressOption).release().perform()
+								
+			
+			
+			
+			
+			
+
+
+
+Appium Important Methods to Interact with an App
+----------------------------------------------------------------------------
+1. isAppInstalled :
+		This method is basically used for check whether given app is install in device or not. retrun true if app is install otherwise retrun false
+			Syntax:  driver.isAppInstalled("appPackageName")
+			Example: boolean isAppInstalled = driver.isAppInstalled("io.appium.android.apis")
+		
+		
+		
+2. installApp
+		This method will install the given app on the device
+			Syntax:  driver.installApp("APKFilePath")
+			Example: driver.installApp(System.getProperty("user.dir")+"/APK/ApiDemos-debug.apk")
+
+
+		
+3. startActivity
+		This method will start an Android Activity(particular app from the device) by providing the the PackageName and ActivityName
+			Syntax: driver.startActivity(new Intent("PackageName", "ActivityName"))
+			Example: driver.startActivity(new Activity("io.appium.apis", "io.appium.android.apis.ApiDemos"));
+			
+			
+			
+4. runAppInBackground
+		This method will send the currently active app to the background for a certain ammount of time and bring it back to the foreground
+			Syntax: driver.runAppInBackground(Duration.ofSecond(10))
+			Example: driver.runAppInBackground(Duration.ofSecond(10))
+
+
+
+5. terminateApp
+		Terminate an exisiting application on the device. (Minimize focus instance of running App) if application is not running then return the result as false, otherwise true.
+			Syntax: driver.terminateApp("PackageName");
+			Example: driver.terminateApp("io.appium.apis");
+			
+			
+			
+6. activateApp
+		This method will move the running app to foreground
+			Syntax: driver.activateApp("PackageName");
+			Example: driver.activateApp("io.appium.apis");
+			Example: driver.activateApp("com.google.android.youtube");
+
+
+
+
+7. queryAppState
+		This method will return the current app state(for example - whether the app is running in forground or background)
+			Sysntax: driver.queryAppState("PackageName")
+			Example: driver.queryAppState("io.appium.apis");
+			
+			
+			
+8. removeApp
+		This method will unInstall or Remove the app from the device
+			Syntax: driver.removeApp("PackageName")
+			Example: driver.removeApp("io.appium.apis");
+
+
+
+---------------------------------------------------------
+
+
+----------------------------------------------------------------------------------------------
+public class StartAppiumServer{
+
+	public static AppiumDriverLocalService service;
+	public static String NodeJSExePath = "c:\\programfile\\nodejs\\node.exe"
+	public static String NodeJSMainPath = "c:\\users\\userName\\AppData\\Local\\Program\\Appium Server GUI\\resources\\app\\node_modules\\appium\\build\\lib\\main.js"
+	
+
+	@BeforeTest
+	publicvoid StartAppiumServer(){
+			AppiumDriverLocalService service = AppiumDriverLocalService.buildService(new AppiumServiceBuilder()
+									.usingDriverExecutable(new File(NodeJSExePath))
+									.withAppiumJS(new File("AppiumJSPath"))	
+									.withIPAddress("serverIPAddress")					//Like * -:  "127.0.0.1"
+									.withArgument(GeneralServiceFlag.BASEPATH, "/wd/hub")
+									.usingPort(4723)
+									.withLogFile(new File("logFileURL")) 				//Like * -:	  "c:\\users\\MYAppiumLogFile.text"
+									);
+									
+		service.start();
+	}
+	
+	
+	
+	@Test
+	public void lunchApp(){
+		DesiredCapabilities cap = new DisiredCapabilities();
+
+		cap.setCapability(MobileCapabilityType.PLATFORM_NAME, MobilePlatform.ANDROID);
+		cab.setCapability(MobileCapabilityType.NO_RESET, true)
+		//cap.setCapability("appPackage", "io.appium.apis");
+		//cap.setCapability("appActivity", "io.appium.android.apis.ApiDemos");
+		cap.setCapability(MobileCapabilityType.DEVICE_NAME, "emulator-5554")
+
+		AndroidDriver driver = new AndroidDriver(new URL("https://127.0.0.1:4723/wd/hub/"), cap)
+
+		driver.manage().timeouts().implicilityWait(25, TimeUnit.SECONDS);
+		
+		boolean isAppInstalled = driver.isAppInstalled("io.appium.android.apis"){
+			//driver.startActivity(new Activity("packageName", "activityName"));
+			driver.startActivity(new Activity("io.appium.apis", "io.appium.android.apis.ApiDemos"));
+			Thred.sleep(500)
+		}else{
+			//Download APK and put in in your project folder : https://github.com/appium/appium/blob/master/packages/appium/sample-code/apps/ApiDemos-debug.apk
+			driver.installApp(System.getProperty("user.dir")+"/APK/ApiDemos-debug.apk")
+			try{
+					driver.startActivity(new Activity("io.appium.apis", "io.appium.android.apis.ApiDemos"));
+			}catch(Exception e){
+				
+			}
+			driver.findElement(By.Id("com.android.permissioncontroller:id/continoue_button")).click();
+			Thred.sleep(500)
+			driver.findElement(By.Id("android:id/button1")).click();
+			
+			
+			
+		}
+		
+		
+		WebElement text = driver.findElement(By.XPath("//android.wedget.TextView[@content-desc=\"Text\"]"))\
+		System.out.println(text.getText());
+		
+		text.click();
+		 
+
+
+
+			Thred.sleep(500)
+			driver.runAppInBackground(Duration.ofSecond(10))
+			
+			
+			
+			Thred.sleep(500)
+			driver.terminateApp("io.appium.apis");
+			
+			
+			
+			Thred.sleep(500)
+			driver.activateApp("com.google.android.youtube");
+			
+			
+			Thred.sleep(500);
+			driver.queryAppState("io.appium.apis");
+			
+			
+			Thred.sleep(500);
+			driver.removeApp("io.appium.apis");
+	}
+	
+	
+	@AfterTest
+	public void TearDown(){
+		if(service.isRunning() == true){
+			service.stop();
+		}
+	}
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+How to Scroll Up & Down till an element in Appium
+
+ByAndroidUIAutomator
+
+UiScrollable - is a powerfull Android class thta perform element lookups in scrollable layout
+
+
+Syntax
+	"new UiScrollable(new UiSelector().scrollable(true).instance(0))"
+		+ ".scrollIntoView(new UiSelector())" + ".textMatches(\""+Element Text" + "\").instance(0)"
+		
+		
+		
+		
+Example:
+public class StartAppiumServer{
+
+	public static AppiumDriverLocalService service;
+	public static String NodeJSExePath = "c:\\programfile\\nodejs\\node.exe"
+	public static String NodeJSMainPath = "c:\\users\\userName\\AppData\\Local\\Program\\Appium Server GUI\\resources\\app\\node_modules\\appium\\build\\lib\\main.js"
+	
+
+	@BeforeTest
+	publicvoid StartAppiumServer(){
+			AppiumDriverLocalService service = AppiumDriverLocalService.buildService(new AppiumServiceBuilder()
+									.usingDriverExecutable(new File(NodeJSExePath))
+									.withAppiumJS(new File("AppiumJSPath"))	
+									.withIPAddress("serverIPAddress")					//Like * -:  "127.0.0.1"
+									.withArgument(GeneralServiceFlag.BASEPATH, "/wd/hub")
+									.usingPort(4723)
+									.withLogFile(new File("logFileURL")) 				//Like * -:	  "c:\\users\\MYAppiumLogFile.text"
+									);
+									
+		service.start();
+	
+	}
+	
+	
+	
+	@Test
+	public void lunchApp(){
+		DesiredCapabilities cap = new DisiredCapabilities();
+
+		cap.setCapability(MobileCapabilityType.PLATFORM_NAME, MobilePlatform.ANDROID);
+		cab.setCapability(MobileCapabilityType.NO_RESET, true)
+		//cap.setCapability("appPackage", "io.appium.apis");
+		//cap.setCapability("appActivity", "io.appium.android.apis.ApiDemos");
+		cap.setCapability(MobileCapabilityType.DEVICE_NAME, "emulator-5554")
+
+		AndroidDriver driver = new AndroidDriver(new URL("https://127.0.0.1:4723/wd/hub/"), cap)
+
+		driver.manage().timeouts().implicilityWait(25, TimeUnit.SECONDS);
+		
+		
+		
+		
+		
+		Thred.sleep(2000);
+		
+		driver.findElement(new AppiumBy.ByAndroidUIAutomator("new UiScrollable(new UiSelector().scrollable(true).instance(0))"+".scrollIntoView(new UiSelector()" + ".textMatches(\"TextClock" +"ElementText" + "\").instance(0))"));  
+		
+		Thred.sleep(2000);
+
+		driver.findElement(By.Xpath("//*[contains(@text, "TextClock")]")).click(); 
+		
+		
+		
+		
+		
+		driver.navigate().back();
+		
+		
+		
+		Thred.sleep(2000);
+		
+		driver.findElement(new AppiumBy.ByAndroidUIAutomator("new UiScrollable(new UiSelector().scrollable(true).instance(0))"+".scrollIntoView(new UiSelector()" + ".textMatches(\"Buttons" +"ElementText" + "\").instance(0))"));  
+		
+		Thred.sleep(2000);
+		driver.findElement(By.Xpath("//*[contains(@text, "Buttons")]")).click(); 
+	}
+	
+	
+	@AfterTest
+	public void TearDown(){
+		if(service.isRunning() == true){
+			service.stop();
+		}
+	}
+	
+}
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+How to Handle Android Native Keyboard
+
+boolean isKeyboardShown = driver.isKeyboardShown() 
+
+driver.pressKey(new KeyEvent(AndroidKey.A))
+driver.pressKey(new KeyEvent(AndroidKey.C))
+driver.pressKey(new KeyEvent(AndroidKey.D))
+
+driver.pressKey(new KeyEvent(AndroidKey.1))
+driver.pressKey(new KeyEvent(AndroidKey.5))
+
+driver.pressKey(new KeyEvent(AndroidKey.SPACE))
+
+
+driver.pressKey(new KeyEvent(AndroidKey.BRIGHTNESS_DOWN))
+driver.pressKey(new KeyEvent(AndroidKey.BRIGHTNESS_UP))
+
+
+
+driver.pressKey(new KeyEvent(AndroidKey.CONTACTS))
+driver.pressKey(new KeyEvent(AndroidKey.HOME))

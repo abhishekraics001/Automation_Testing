@@ -1,0 +1,243 @@
+Whta is SonarQube?
+	Software Quality Measurement Tool. A popular static code analysis tool that can be used for error identification and security testing. 
+	This is an open-source package that is available in free and paid versions for continuous inspection of code quality and automatic reviews that runs on Docker over Windows, Linux, macOS, and Azure.
+	SonarQube is a Code Quality Assurance tool that collects and analyzes source code, and provides reports for the code quality of your project. 
+	It combines static and dynamic analysis tools and enables quality to be measured continually over time. Everything from minor styling choices, to design errors are inspected and evaluated by SonarQube. 
+	This provides users with a rich searchable history of the code to analyze where the code is messing up and determine whether or not it is styling issues, code defeats, code duplication, lack of test coverage, or excessively complex code. 
+	It's cover the 
+		- Reliability(Bug), 
+		- Security(Vulnerability), 
+		- Maintainability(CodeSmells), 
+		- Dublication(Dublicasy), 
+		- Error and 
+		- Coverage(codeCoverage).
+
+	- Release 
+		- Community
+		- Developer
+		- Enterprises
+		- Data Center
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------
+Software Quality Measurement
+	When creating software, the code should have the following characteristics:
+
+		The code should follow a specific convention
+		The code should be following established good practices and have been followed
+		Checked for potential bugs and performance, security, or vulnerabilities issues
+		Is the code duplicated anywhere
+		Does the code make logical sense, or is it too complex
+		Does the public API have good documentation and comments
+		Does the code have unit tests
+		Doe the code follow good software design and architecture principles.
+		We can enforce these coding standards automatically by two methods: Static code analysis or Dynamic code analysis. To explain them quickly:
+
+Dynamic code analysis
+	Dynamic Code Analysis relies on studying how the code behaves during execution. The objective is to find errors in a program while it is running, rather than by repeatedly examining the code offline. Some things that Dynamic code analysis does are:
+		Code Coverage: Computing how much a piece of code gets tested by test suites
+		Memory error detection: Checking whether or not memory leaks or errors occur
+		Fault localization: Locating the buggy code to a specific location
+		Invariant Inference: Observes the values that the program computes, and then report properties that were true over the observed executions, and this likely true over all executions.
+		Security Analysis: Detect security problems.
+		Concurrency errors: Dynamic Uses runtime error detection to expose defects such as race conditions, exceptions, resource and memory leaks, and security attack vulnerabilities
+		Program slicing: Consists of reducing the program to the minimum form that still produces the selected behavior.
+		Performance Analysis: dynamically tracing software applications at runtime and captures data that can be used to analyze and identify the causes of poor performance.
+
+
+
+
+Static Code Analysis
+	Static code analysis is done without executing any of the code. It is a collection of algorithms and techniques to analyze source code to automatically find potential errors and poor coding practices. This is done with compiler errors and run-time debugging techniques such as white box testing. Static code analysis is also considered a way to automate code review process. The tasks involved in static code analysis can be divided as such:
+		Detecting errors in programs
+		Recommendations on code formatting with a formatter
+		Metrics computation, which gives you back a rating on how well your code is
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------
+Whta are the tools for static code review
+	- SonarQube
+	- Lint
+	- SmartBear Collaborator
+	- CodeSonar
+	- 
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------
+Architecture and Integration
+
+The SonarQube platform comprises of 4 components:
+
+
+Architecture Diagram: https://scm.thm.de/sonar/images/embed-doc/images/architecture-scanning.pngy
+
+	1. SonarQube Server: SonarQube Server comprising into 3 main processes:
+		i.		Web Servers for developers which allows managers to browse quality snapshots and configure the SonarQube instances
+		ii.		Search Server based on Elastic search to back searches from the UI
+		iii. 	Compute engine server in charge of processing code analysis reports and saving them in the SOnarQube database
+
+
+	2. SonarQube Database which/to stores:
+		i.		The configuration of the SonarQube instance
+		ii.		The quality snapshots of projects, views, etc.
+
+	3. Multiple SonarQube plugins installed on the server, possibly including language, SCM, integration, authentication, and governance plugins
+
+	4. One or more SonarScanners running on your Build/Continuous integration servers to analyze a project
+
+
+
+Integration Diagram: https://scm.thm.de/sonar/images/embed-doc/images/architecture-integrate.png
+	
+	i.		Developers code in their IDEs and use SonarLint to run local analysis.
+	ii.		Developers push their code into their favourite SCM : git, SVN, TFVC, ...
+	iii.	The Continuous Integration Server triggers an automatic build, and the execution of the SonarScanner required to run the SonarQube analysis.
+	iv.		The analysis report is sent to the SonarQube Server for processing.
+	v.		SonarQube Server processes and stores the analysis report results in the SonarQube Database, and displays the results in the UI.
+	vi.		Developers review, comment, challenge their Issues to manage and reduce their Technical Debt through the SonarQube UI.
+	vii.	Managers receive Reports from the analysis. Ops use APIs to automate configuration and extract data from SonarQube. Ops use JMX to monitor SonarQube Server
+
+
+Flow Diagram: https://miro.medium.com/v2/resize:fit:1400/format:webp/1*ovd9Ezb6LWYA7Ws3R7EqzQ.png
+
+
+---------------------------------------------------------------------------------------------------------------------------------------
+Installation Guide
+	i. 		https://soshace.com/how-to-setup-sonarqube-in-a-project-on-local-machine/
+	ii.		https://devops4solutions.com/sonarqube-installation-windows/
+	iii. 	https://www.fosstechnix.com/how-to-install-sonarqube-on-windows-4-steps/#step-1-download-and-install-oracle-java-17-on-windows
+
+
+How to Install SonarQube for localCode in your fevorites IDEs
+	SonarLint is used for local codeBase with your fevorites IDEs
+		i. 		Go To Setting
+		ii. 	Pluging
+		iii. 	Search -> SonarLint
+		iv. 	Select & Install.
+		v. 		Restart your IDEs
+		
+	Run the the SonarLint
+		i. 		Select Project
+		ii. 	Right Click
+		iii. 	Analysis
+		iv.		SonarLint or Analysis with SonarLint
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------
+How to Install SonarQube for localCode in your fevorites IDEs and connect with your SonarQube Server / Cloud
+	There is total 3 steps
+	1. SonarLint is used for local codeBase with your fevorites IDEs
+		i. 		Go To Setting
+		ii. 	Pluging
+		iii. 	Search -> SonarLint
+		iv. 	Select & Install.
+		v. 		Restart your IDEs
+		
+	
+	2. Install SonarQube Server on your local or remote server
+		i.		Download & install Java on your local / remote server: 11+ version 
+					Download URL: https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html
+		ii.		Download & Install SonarQube on your local / remote server
+					Download URL: https://www.sonarsource.com/products/sonarqube/downloads/
+		iii.	Start SonarQube on Windows
+					a) 		we can set default Java executable by setting the environmental variable SONAR_JAVA_PATH.
+								windows command: 	setx SONAR_JAVA_PATH "C:\Program Files\java_home\bin\java.exe"
+					b)		We have downloaded and extracted SonarQube in C:\ drive in windows
+								Path:	C:\sonarqube-x.x.x\bin\windows-x86-64
+					c)		Go to C:\sonarqube-x.x.x\bin\windows-x86-64 path, there is StartSonar window batch file right click on run as administrator.
+					d)		Access SonarQube on Windows
+								URL: localhost:9000 OR IP:9000
+					e)  	Login with default credentials
+								Default Credentils:	admin / admin
+					f) 		Update your password
+					g) 		once password updated, you will navigate to SonarQube Dashboard as shown below.
+		iv. 	Create / Add Project
+					a) 		Click on the ‘Projects’ tab and then click the ‘Create new project’ button.
+					b)		Enter a unique ‘Project key’ and ‘Display name’ for your project, and click the ‘Set Up’ button.
+					c)		Select your preferred analysis method. For this guide, we’ll use the SonarQube Scanner, which is a standalone command-line tool that works with most programming languages and build tools.
+		v. 		Download and install the SonarQube Scanner
+					a) 		install the SonarQube Scanner
+					b)		Configure your project’s analysis settings by creating a ‘sonar-project.properties’ file in your project’s root folder. This file should include the following basic settings
+									sonar.projectKey=<your_project_key>
+									sonar.projectName=<your_project_display_name>
+									sonar.sources=<your_project_source_folder>
+									sonar.sourceEncoding=UTF-8
+		v. 		Create / Generate token
+						
+	
+	
+	3. After That => Configure your SonarLint with your SonarQube Server / Cloud
+		i. 		Go to Setting
+		ii. 	Tools
+		iii. 	SonarLint
+		iv.		Click on Add / Plush Button  | Add SonarQube Server or SonarCloud Connection
+		v. 		Select => Sonar Server
+		vi. 	Add / Put your your SonarQube URL 
+					Example : https://localhost:9000  || https://<yourIP or doamin>:9000
+		vii.	Next
+		viii. 	Put your Project Token or Generate Token
+		vix.	Next
+		
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------
+How to Install SonarQube for localCode in your fevorites IDEs and connect with your SonarQube Server / Cloud
+	Thereis total 2 steps for the same
+	1. SonarLint is used for local codeBase with your fevorites IDEs
+		i. 		Go To Setting
+		ii. 	Pluging
+		iii. 	Search -> SonarLint
+		iv. 	Select & Install.
+		v. 		Restart your IDEs
+		
+		
+	2. After That => Configure your SonarLint with your SonarQube Server / Cloud
+		i. 		Go to Setting
+		ii. 	Tools
+		iii. 	SonarLint
+		iv.		Click on Add / Plush Button  | Add SonarQube Server or SonarCloud Connection
+		v. 		Select => Sonar Server
+		vi. 	Add / Put your your SonarQube URL 
+					Example : https://localhost:9000  || https://<yourIP or doamin>:9000
+		vii.	Next
+		viii. 	Put your Project Token or Generate Token
+		vix.	Next
+		
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------
+About machines and locations:
+	The SonarQube platform cannot have more than one SonarQube server (unless clustered), and one SonarQube database
+	For optimal performance, each component should be installed on separate machines and the server machine should be dedicated
+	SonarScanners scale by adding machines
+	All machines must be time-synchronized
+	SonarQube server and SonarQube Database must be located in the same network
+	SonarScanners don’t need to be on the same network as the SonarQube Server
+	There is no communication between SonarScanners and the SonarQube Database.
+
+
+To integrate SonarQube on a production environment, follow these steps:
+	Developers code in their IDEs and use SonarLint to run local analysis
+	Developers push their code to their favorite SCM
+	The Continuous Integration Server triggers an automatic build, and the execution of the Sonar Scanner required to run the SonarQube Analysis
+	The analysis report is sent to the SonarQube Server for processing
+	SonarQube server processes and stores the analysis report results in the SonarQube Database and displays the results in the UI
+	Developers review, comment, challenge their issues to manage and reduce their Technical Debt through SonarQube UI
+	Managers receive reports from the analysis, Ops use APIs to automate the configuration and extract data from SonarQube, and ops use JMX to monitor SonarQube Servers.
+
+
+
+--------------------------------------------------------------------
+	
+

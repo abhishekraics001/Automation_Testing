@@ -1,0 +1,371 @@
+-------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------
+What is Cucumber: 
+		Cucumber Framework executes automated acceptance tests written in the “Gherkin” language. Gherkin is a domain-specific language for behavior descriptions. Gherkin is business-readable.
+		Cucumber is a Behavior Driven Development tool used to develop test cases for the behavior of software's functionality. It plays a supporting role in automated testing.
+		Cucumber is a software tool used by the testers to develop test cases for the testing of behavior of the software.
+		Cucumber tool plays a vital role in the development of acceptance test cases for automation testing. It is mainly used to write acceptance tests for web applications as per the behavior of their functionalities.
+		It follows a BDD (Behavior Driven Development) framework to observe the behavior of the software's functionalities.
+		In the Cucumber testing, the test cases are written in a simple English text, which anybody can understand without any technical knowledge. This simple English text is called the Gherkin language.
+		It allows business analysts, developers, testers, etc. to automate functional verification and validation in an easily readable and understandable format (e.g., plain English).
+		We can use Cucumber along with Watir, Selenium, and Capybara, etc. It supports many other languages like PHP, Net, Python, Perl, etc.
+
+
+		Note:
+			In order to get better advantage of the software testing, organizations are nowadays taking a step forward. They implement important acceptance test scenarios while development is in-progress. This approach is commonly known as Behavior Driven Development (BDD).
+			Behavior Driven Development gives us an opportunity to create test scripts from both the developer’s and the customer’s perspective as well. So in the beginning, developers, project managers, QAs, user acceptance testers and the product owner (stockholder), all get together and brainstorm about which test scenarios should be passed in order to call this software/application successful. This way they come up with a set of test scenarios. All these test scripts are in simple English language, so it serves the purpose of documentation also.
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+what is Gherkin
+		A language above is called Gherkin and it implements the principles of Business readable domain specific language(BRDSL). 
+		Domain-specific language gives you the ability to describe your application behavior without getting into details of implementation.
+		Gherkin offers a common set of keywords in the plain English text, which can be used by members from different communities and can get the same output from the test scripts.
+		Gherkin offers the following specific keywords to write the common test scripts in the feature file:
+			i.		Feature
+			ii.		Scenario
+			iii.	Given
+			iv.		When
+			v.		Then
+			vi.		But
+			vii.	And
+			viii.	Background
+				Note: We explain each (below / latter in file) in details
+
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------
+Cucumber test automation makes use of two important files:
+		1.	Feature file: 
+					Contains code written in Gherkin (plain English text)
+					The file, in which Cucumber tests are written, is known as feature files. 
+					It is advisable that there should be a separate feature file, for each feature under test. like - login.feature, signup.feature, forgotPassword.feature
+					The extension of the feature file needs to be “.feature”. like - login.feature, signup.feature, forgotPassword.feature
+					
+		2.	Steps & (Scenario) definition file:
+					Contains the actual code written by the developer
+					Scenario is one of the core Gherkin structures. Every scenario starts with the keyword “Scenario:” (or localized one) and is followed by an optional scenario title. 
+					Each feature can have one or more scenarios and every scenario consists of one or more steps. 
+					Each step should be clearly defined, so that it does not create any confusion for the reader.
+					Do not repeat the test scenario, if needed use scenario outline to implement repetition.
+					Develop a test step in a way that, it can be used within multiple scenarios and scenario outlines.
+					As far as possible, keep each step completely independent. For example: “Given the user is logged in”. This can be divided into two steps
+						i. 	Given the user enters the user name.
+						ii.	Clicks on login.
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------				
+Cucumber acts as a bridge between the following teams:
+		1.	Business Analysts and Software Engineers
+		2. 	Manual and Automation Testers
+		3.	Manual Testers and Developers
+	
+	
+	
+	
+	
+-------------------------------------------------------------------------------------------------------------------------------------------------	
+Benefits of using Cucumber Testing Tools
+		1.	Involving stakeholders becomes easier regardless of their programming knowledge.
+		2.	Testers can write Test scripts without having in-depth knowledge of programming
+		3.	Plugins are faster as compared to Selenium
+		3.	Supports various programming languages
+		4.	Code can be reused
+		5.	Simple and quick setup
+		6.	Flexible with different software platforms like Selenium, Ruby on Rails, Watir, Spring framework, and so forth
+
+Advantages of Cucumber Tool
+		1.	The main focus of the Cucumber Testing is on the end-user experience, as the success of the software ultimately depends on the end-user experience.
+		2.	The test case writing is very easy and understandable.
+		3.	It provides an end-to-end testing framework, unlike other tools.
+		4.	It supports almost all popular different languages like Java, .net, JavaScript Ruby, PHP, etc.
+		5.	It works as a bridge between business and technical language, and this bridge is sustainable because of test cases written in a plain English text.
+		6.	The testing environment set up and execution both are very quick and easy.
+		7.	It is a well efficient tool for testing.
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------
+Behavior Driven Development : BDD
+		BDD (Behavioral Driven Development) is a software development approach that was developed from Test Driven Development (TDD).
+		BDD includes test case development on the basis of the behavior of software feature & functionalities. All test cases are written in the form of simple English statements inside a feature file, which is human readablegenerated. Acceptance test case statements are entirely focused on user actions.
+		BDD is written in simple English language statements, not in a typical programming language. BDD improves communication between technical and non-technical teams and stakeholders.
+	
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+Life Cycle of BDD
+		https://browserstack.wpenginepowered.com/wp-content/uploads/2023/05/Lifecycle-of-BDD-768x169.png
+		1.	Describe behavior
+		2.	Write step Definition
+		3. 	Run and Fail the Tests
+		4.	Apply Update Code
+		5.	Run and Pass the Tests
+	
+	
+-------------------------------------------------------------------------------------------------------------------------------------------------	
+Benefits of BDD in Cucumber Framework
+		1.	Focuses on defining ‘behavior’ rather than defining ‘tests’
+		2.	Enhances communication among the members of a cross-functional product team
+		3.	Helps reach a wider audience by the usage of non-technical language
+		4.	It enables you to understand how the system should perform from the developer’s and customer’s perspective
+		5.	The improvement in the quality of code results in reduced costs of maintenance and also minimizes the project’s associated risks.
+	
+	
+Limitations of Behavior-driven development
+		1.	Testers must have prior experience in TDD (Test-driven Development) to work in BDD
+		2.	BDD approach may be ineffective if the requirements are not correctly analyzed
+		3.	Testers must have sufficient technical skills
+
+	
+	
+	
+	
+	
+	
+-------------------------------------------------------------------------------------------------------------------------------------------------	
+-------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------	
+Example of Cucumber Test
+	Steps / Annotation : 
+		1. Feature:
+				Name of the feature under test.
+				It describes the pre-requisite for the test to be executed.
+				Each feature file of Cucumber testing starts with a feature keyword. It is a standalone unit or functionality to be tested. 
+				Example − 
+					i.		Login feature
+					ii.		GIVEN I am a Facebook user
+					iii.	Payment transfer feature
+					iv.		Registration feature.
+							
+					Ex:		Feature: Login 
+								Scenario: Login verification
+									Given: user navigates to the application or website
+									When User Navigate to Login Page 
+									And: user logs in through Login Window by using Username as "USER" and Password as "PASSWORD"
+									Then: login must be successful.
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+		2. Description (optional):
+				Describe about feature under test.
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+		3. Scenario :
+				What is the test scenario.
+				Details about the scenario under the test needs to be captured after the keyword “Scenario:”
+				Each feature contains the required number of tests to test the feature. Each test is named as a Scenario.
+				For exampl: feature login functionality can contain two scenarios, first for a successful login and second for unsuccessful login.
+				
+					Ex:		Feature: Login 
+								Scenario: Successful Login with Valid entries
+									Given user navigates to the website javatpoint.com
+									When User Navigate to Login Page 
+									And user logs in through Login Window by using Username as "USER" and Password as "PASSWORD"
+									Then login must be successful.
+								Scenario: Unsuccessful Login with Invalid entries
+									Given user navigates to the website javatpoint.com
+									And user logs in through Login Window by using Username as "USER" and Password as "1234erty"
+									But user entered wrong username and password
+									Then login must be unsuccessful.
+
+
+
+
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+		4. Given :
+				Prerequisite before the test steps get executed.
+				Given keyword refers to the pre-condition of the test. For example, to access any web application, the first requirement or precondition is to navigate its home page, because, from the home page, we can navigate to other links such as signup, login, etc.
+
+					Ex:		Feature: Login 
+								Scenario: Login verification
+									Given: user navigates to the application or website
+										When User Navigate to Login Page 
+										And: user logs in through Login Window by using Username as "USER" and Password as "PASSWORD"
+										Then: login must be successful.
+										
+			
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+		5.	When :
+				Specific condition which should match in order to execute the next step.
+				It defines the trigger point for any test scenario execution.
+				It usually refers to the actions of a user that is to be executed.
+				Example − WHEN I enter "<username>"
+				
+					Ex:
+							Feature: Login 
+								Scenario: Successful Login with Valid entries
+									Given user navigates to the website javatpoint.com
+										When User Navigate to Login Page 
+											And user logs in through Login Window by using Username as "USER" and Password as "PASSWORD"
+											Then login must be successful.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+		6. Then :
+				What should happen if the condition mentioned in WHEN is satisfied.
+				Then holds the expected result for the test to be executed.
+				Then keyword refers to the outcome of the previous step or upcoming action.
+				Example − THEN login should be successful.
+	
+					Ex:
+							Feature: Login 
+								Scenario: Successful Login with Valid entries
+									Given user navigates to the website javatpoint.com
+										When User Navigate to Login Page 
+											And user logs in through Login Window by using Username as "USER" and Password as "PASSWORD"
+											
+											Then login must be successful.
+
+											
+-------------------------------------------------------------------------------------------------------------------------------------------------			
+		7. And
+				It provides the logical AND condition between any two statements. AND can be used in conjunction with GIVEN, WHEN and THEN statement.
+				Example − WHEN I enter my "<username>" AND I enter my "<password>"
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+		8. But
+				It signifies logical OR condition between any two statements. OR can be used in conjunction with GIVEN, WHEN and THEN statement.
+				Example − THEN login should be successful. BUT home page should not be missing.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+		9. Scenario Outline − (To be covered later)
+				Examples − (To be covered later)
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+		10. Background −
+				Background generally has the instruction on what to setup before each scenario runs. However, it gets executed after “Before” hook (to be covered later). So this is ideal to be used for code when we want to set up the web-browser or we want to establish the database connectivity.
+				This keyword is used to define the steps that are common to all tests in the feature file. 
+				For example, Navigation to Home Page, Click on the Login, Enter User Name and Password, Click on Submit button are the common steps in almost all web applications.
+
+				Example −
+					Background:
+					Go to Facebook home page.
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+			Example - 1
+				Feature: Login Function
+					Scenario: As an existing user, I want to log in successfully.
+						Given the user is on the Home page
+						When the user navigates to the Login page 
+						And the user enters the username and password
+						Then the successful login message is displayed
+
+
+
+			Example - 2
+				Feature: Login Function To enter in the System. User must be able to Access software when login is successful 
+					Scenario: Login
+						Given User has its Email And Password  
+						When User enters the correct Email 
+						And Password  
+						Then It should be logged in
+					Scenario: Unsuccessful Login
+						When User enters either wrong Email or Password 
+						Then It should be reverse back on the login page with an error message
+-------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------Example---------------------------------------------------------------
+Feature: Login.feature
+	feature: Login and Logout
+		Scenario: Successful Login with Valid Credentials
+			Given User is on Home Page
+			When User Navigate to LogIn Page
+			And User enters UserName and Password
+			Then Message displayed Login Successfully
+
+		Scenario: Successful LogOut
+			When User LogOut from the Application
+			Then Message displayed LogOut Successfully
+-------------------------------------------------------------------------------------------------------------------------------------------------
+Test Class: Test_Steps.java
+
+	package stepDefinition;
+	import java.util.concurrent.TimeUnit;
+	import org.openqa.selenium.By;
+	import org.openqa.selenium.WebDriver;
+	import org.openqa.selenium.firefox.FirefoxDriver;
+	import cucumber.api.java.en.Given;
+	import cucumber.api.java.en.Then;
+	import cucumber.api.java.en.When;
+
+	public class Test_Steps {
+		public static WebDriver driver;
+		@Given("^User is on Home Page$")
+		public void user_is_on_Home_Page() throws Throwable {
+			driver = new FirefoxDriver();
+			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+			driver.get("https://www.store.demoqa.com");
+		}
+
+		@When("^User Navigate to LogIn Page$")
+		public void user_Navigate_to_LogIn_Page() throws Throwable {
+			driver.findElement(By.xpath(".//*[@id='account']/a")).click();
+		}
+
+		@When("^User enters UserName and Password$")
+		public void user_enters_UserName_and_Password() throws Throwable {
+			driver.findElement(By.id("log")).sendKeys("testuser_1"); 	 
+			driver.findElement(By.id("pwd")).sendKeys("Test@123");
+			driver.findElement(By.id("login")).click();
+		}
+
+		@Then("^Message displayed Login Successfully$")
+		public void message_displayed_Login_Successfully() throws Throwable {
+			System.out.println("Login Successfully");
+		}
+
+		@When("^User LogOut from the Application$")
+		public void user_LogOut_from_the_Application() throws Throwable {
+			driver.findElement (By.xpath(".//*[@id='account_logout']/a")).click();
+		}
+
+		@Then("^Message displayed Logout Successfully$")
+		public void message_displayed_Logout_Successfully() throws Throwable {
+			System.out.println("LogOut Successfully");
+		}
+
+	}
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+How does Cucumber work?

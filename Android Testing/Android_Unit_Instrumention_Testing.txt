@@ -1,0 +1,1139 @@
+There is two type of testing in Android 
+1. Unit Testing (Business logic only) - WhiteBox testing
+2. Instrumention Testing (Android Compoment / framework based) - WhiteBox testing
+Not: For blackBox Testing uses Appium Framwork
+
+
+
+1. Local Unit tests  /  Unit / Pure Code Test => /src/test/java: 
+	i. 		src/test is for pure unit test that do not involve android framework. 
+	ii. 	You can run tests here without running on a real device or on emulator.
+	iii. 	Unit tests that run locally on the Java Virtual Machine (JVM) only without running on a real device or on emulator . 
+	iv. 	Use these tests to minimize execution time when your tests have no Android framework dependencies or when you can mock the Android framework dependencies.
+	v. 		Unit tests are used to verify that business logic is working right without using a real device.e. 
+	vi. 	We will use JUnit, Mockk & Mockito ( mockito-kotlin ) and hamcrest to achieve this.
+	vii.	The test directory should contain the tests that run on your local machine, such as unit tests. In contrast to the above, these can be tests that run on a local JVM.
+	viii.	Unit / Local Test Tools / Framwork: 
+				i.		JUnit : JUnit 4 framework
+				ii.		Mockk  / Mockito framework 
+				iii. 	Robolectric
+				
+
+2. Instrumentation / Android Framwork Based Test => src/androidTest: 
+	i. 		src/androidTest is for unit tests that involves android instrumentation.
+	ii. 	Instrumentation tests that run on an Android device or emulator. 
+	iii. 	These tests have access to Instrumentation information, such as the Context of the app you are testing. 
+	iv. 	Use these tests when your tests have Android dependencies that mock objects cannot satisfy.
+	v. 		With instrumented testing, we are able to verify app logic that needs a real / virtual device, so mostly we will verify the UI. 
+	vi. 	We will also use JUnit and we will add Espresso. Use Espresso to write concise, beautiful, and reliable Android UI tests.
+	vii.	The androidTest directory should contain the tests that run on real or virtual devices. Such tests include integration tests, end-to-end tests, and other tests where the JVM alone cannot validate your app's functionality.
+	viii.   Instrumentation / Android Framwork Test tools / Framwork
+				i. 		Espresso
+				ii. 	UI Automator
+				iii.	Robotium
+				iv.		Selendroid
+
+ Note(V.V.I.): testImplementation adds dependencies for local tests and androidTestImplementation adds dependencies for Instrumented tests.
+
+
+
+
+Truth : https://truth.dev/
+Truth is a library for performing assertions in tests:
+
+
+Robolectric: https://robolectric.org/
+Robolectric is the industry-standard unit testing framework for Android
+
+
+
+
+
+
+
+---------------------------------------------------------------------
+Unit Testing
+
+
+__________________________________________________________________________________________________________________________________________
+
+
+__________________________________________________________________________________________________________________________________________
+__________________________________________________________________________________________________________________________________________
+__________________________________________________________________________________________________________________________________________
+__________________________________________________________________________________________________________________________________________
+__________________________________________________________________________________________________________________________________________
+------------------------------------------------Unit / Local Testing for business login-----------------------------------------------------
+__________________________________________________________________________________________________________________________________________
+JUnit:
+	JUnit is the de facto standard for unit testing a Java application. Even though, it is popular for unit testing, it has complete support and provision for instrumentation testing as well. Espresso testing library extends the necessary JUnit classes to support the Android based instrumentation testing.
+
+
+
+
+
+JUnit runner:
+		Android testing framework provides a runner, AndroidJUnitRunner to run the espresso test cases written in JUnit3 and JUnit4 style test cases. 
+		It is specific to android application and it transparently handles loading the espresso test cases and the application under test both in actual device or emulator, execute the test cases and report the result of the test cases
+		To use AndroidJUnitRunner in the test case, we need to annotate the test class using @RunWith annotation and then pass the AndroidJUnitRunner argument as specified below
+		
+		Example:
+			@RunWith(AndroidJUnit4.class)
+			public class ExampleInstrumentedTest {
+				//your class body
+			}
+
+
+
+
+JUnit Annotations:
+	The JUnit framework uses annotation extensively. Some of the important annotations are as follows 
+			i.		@BeforeClass:
+						@BeforeClass will be called or executed only once before running all test cases in a particular class. 
+						It is useful to create resource intensive object like database connection object. 
+						This will reduce the time to execute a collection of test cases. 
+						This method needs to be static in order to work properly
+							
+						Example:	
+							private static TemporaryFolder tempFolder = null;
+							@BeforeClass
+							public static void CreateComputationObject() {
+								//your code will be he...... for initialize the object
+								tempFolder = new TemporaryFolder();
+							}
+							
+
+
+			ii.		@Rule:
+						@Rule annotation is one of the highlights of JUnit. It is used to add behavior to the test cases. 
+						We can only annotate the fields of type TestRule. 
+						It actually provides feature set provided by @Before and @After annotation but in an efficient and reusable way
+						Junit Rules work on the principle of AOP (aspect oriented programming). It intercepts the test method thus providing an opportunity to do some stuff before or after the execution of a particular test method
+						Android testing framework provides a rule, ActivityTestRule to launch an android activity before executing the test cases. 
+						It launches the activity before each method annotated with @Test` and @Before. It will terminate the activity after method annotated with @After. 
+						
+						Example:
+							@Rule
+							public TemporaryFolder tempFolder = new TemporaryFolder();
+							
+							@Rule
+							public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
+
+							@Test
+							public void testRule() throws IOException {
+								File newFolder = tempFolder.newFolder("Temp Folder");
+								assertTrue(newFolder.exists());
+							}
+
+
+
+
+			iii.	@Before:
+						@Before annotation is used to refer a method, which needs to be invoked before running any test method available in a particular test class.
+
+						Example:
+							
+							private Computation computation = null;
+						   
+						    @Before
+						    public static void CreateComputationObject() {
+							  computation = new Computation();
+						    }
+						   
+							@Test
+							public void sum_isCorrect() {
+							   assertEquals(4, computation.Sum(2,2));
+							}
+
+
+
+
+
+
+			iv.		@Test
+						@Test is the very important annotation in the JUnit framework. @Test is used to differentiate a normal method from the test case method. 
+						Once a method is decorated with @Test annotation, then that particular method is considered as a Test case and will be run by JUnit Runner. 
+						JUnit Runner is a special class, which is used to find and run the JUnit test cases available inside the java classes.
+						
+						
+						Example:
+						   @Test
+						   public void multiply_isCorrect() {
+							  Computation computation = new Computation();
+							  assertEquals(4, computation.Multiply(2,2));
+						   }
+
+
+
+
+			v.		@After
+						@After will be called or executed after each test case is run.
+						
+						Example:
+							
+							private Computation computation = null;
+						   
+						    @Before
+						    public static void CreateComputationObject() {
+							  computation = new Computation();
+						    }
+						   
+							@Test
+							public void sum_isCorrect() {
+							   assertEquals(4, computation.Sum(2,2));
+							}
+
+							@After
+						    public void DestroyComputationObject() {
+							   this.computation = null;
+						    }
+
+
+
+
+
+			vi.		@AfterClass: 
+						@AfterClass will be called or executed only once after all test cases in a particular class are run. 
+								This method also needs to be static to work properly.	
+								
+								Example:
+									  @AfterClass
+									   public static void DestroyComputationObject() {
+										  //your code will be he...... for un-initialize / clear the object
+									   }
+		
+		
+		
+	important annotations are as follows in execution order	
+		class A {
+		
+			@BeforeClass
+
+				@Rule
+
+				@Before
+
+					@Test
+
+				@After
+
+			@AfterClass
+		}
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+Assertion:	Assertion is a way of checking whether the expected value of the test case matches the actual value of the test case result.
+			Some important Assertion Method
+				i.		fail() − To explicitly make a test case fail.
+				ii.		assertTrue(boolean test_condition) − Checks that the test_condition is true
+				iii.	assertFalse(boolean test_condition) − Checks that the test_condition is false
+				iv.		assertEquals(expected, actual) − Checks that both values are equal
+				v.		assertNull(object) − Checks that the object is null
+				vi.		assertNotNull(object) − Checks that the object is not null
+				vii.	assertSame(expected, actual) − Checks that both refers same object.
+				viii.	assertNotSame(expected, actual) − Checks that both refers different object.
+
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+Some RealTime(When you are writing the test case) Important Key | Rule | Method
+	
+	1. What is the Role of "@get:Rule"  Annotations: 
+			"@get: Rule" annotation is used to ensure that the custome rule fields is properly initialized and utilized by JUnit during the test ececution.
+			Useful when working with rules that require some setup, initialization like - managing the resources or enforcing certain condition for test execution.
+			In JUnit, a Rule is a component that can be applied to a test class or method to add additional behavior or funtionalityfor entired / hole class(for that particular class where you are defining)
+			
+			Some of the Comman use Cases:
+				i. 		Setting UP and Tearing down resources
+				ii.		Mocking the Object or Dependencies
+				iii. 	Handling Exceptions
+				iv.		Customized the behavior of test classes
+			
+			Example:
+				@get:Rule
+				val myCustomeRule = MyCustomeRule()
+				
+				@get:Rule
+				val  instanceTaskExecutorRule =  InstantTaskExecutorRule()
+				
+				
+				
+
+
+	2. What is InstantTaskExecutorRule()
+			The "InstantTaskExecutorRule" is a JUnit Test Rule which provided by Android Architecture Compoment Library.
+			By using It, we can write the Test cases for your LiveData and ViewModel classs/component without dealing with asynchronous complexity.
+				
+			Example:
+				@get:Rule
+				val myCustomeRule = MyCustomeRule()
+				
+				@get:Rule
+				val  instanceTaskExecutorRule =  InstantTaskExecutorRule()
+			
+			
+			
+			
+			
+	3. What is StandardTestDispatcher()
+			it is basically usesing when you are testing you Coroutine based class or method
+			When we are working / writing th etest case with/for Coroutine, Dispatcher are used to control the execution Context for Coroutine, 
+			Bocz Coroutine can run on diffrent Thred / Dispatcher such as IO(input / output for background task), Default, Main(For UI operaction or main thred)
+			
+			Example:
+				var standardTestDispatcher = StandardTestDispatcher()
+				
+				@Before
+				fun setUP(){
+					Dispatcher.setMain(Dispatcher.IO) // IO, Main, Default, Unconfined
+				}
+				
+				@After
+				fun tearDown(){
+					Dispatcher.resetMain()
+				}
+			
+				@Test
+				fun testMyCoroutine() = runTest{
+					val result = viewModel.getData()
+					standardTestDispatcher.scheduler.advanceUntilIdel()
+				}
+				
+				
+	
+	
+	
+	4. How to load & set the Dispatcher
+	
+			This is particulary useful when Testing code that involves coroutine with UI related operaction.
+			In the cpntext of kotlin & coroutine-based code testing "Dispatcher.setMain()" is often used in Unit Testing to replace the main coroutine dispatcher with a test-specific dispatcher. 
+				
+				Example: 
+					Dispatcher.setMain(Dispatcher.IO) // IO, Main, Default, Unconfined
+			
+			
+			
+			
+	5. How to unload & clear Dispatcher
+			"Dispatcher.resetMain()" is called in the "TearDown" method to related to reset the main dispatcher to its default state afetr the tests.
+			
+			
+			Example:
+				Dispatcher.resetMain()
+
+
+			
+			
+	6.	what is cleanupTestCoroutines() ?
+			it used to to ensure that any coroutines launched during the test  are properly clened up.
+			
+			Example: 
+				testDispatcher.cleanupTestCoroutines()
+				
+			
+			
+			
+	7. How to wait for result from particular method which is runing / block writen in coroutine
+			In Coroutine Testing especially with "TestCoroutineDisptcher" or similar test utilities, Developer often use machanisms to advance time, control concurrency, and ensure that asynchronous opraction completed before making any assertion.
+			
+				
+			Example: 
+				var standardTestDispatcher = StandardTestDispatcher()
+				
+				@Before
+				fun setUP(){
+					Dispatcher.setMain(Dispatcher.IO) // IO, Main, Default, Unconfined
+				}
+				
+				@After
+				fun tearDown(){
+					Dispatcher.resetMain()
+				}
+			
+				@Test
+				fun testMyCoroutine() = runTest{
+					//GIVEN
+					// Your Login
+					
+					//MOCK
+					
+					//WHEN - ACT
+					val result = viewModel.getData()
+					
+					//wait and ensure for coroutine or asynchronous based work compleation
+					standardTestDispatcher.scheduler.advanceUntilIdel()
+					
+					//THEN - ASSERTION
+					
+				}
+			
+			
+			
+			
+			
+	8. What is Mock?
+			"Mock" refer to to an object that simulates the behavior of a real Object.
+			Mock object are used to isolate the code being tested by replacing Real, Possibily complex, or external dependencies  with simplified version that allow better controll and verification during Testing.
+			
+			Heare is some key concept related to mocks in unit testing
+				i.		Mock Objects: 
+							These are object that minic the behavor of real object, But they are specifically designed to Testing Purposes.
+							
+							
+				ii. 	Mocking Framework : 
+							These are Tools or Library that provide machanisms for creating and working with Mock Object .
+							Its easier to create mocks, set expectations on their behavior, and verify iteraction
+							
+							Example: 
+								Mockito(For Java & Kotlin), XCTest(For Swift)
+							
+							
+				iii. 	Dependencies Injection :
+							Mocks are frequently used in conjection with dependencies.
+							It's allow to focus on specific unit of code and ensure that the test is isolated from that behavior of actual dependencies.
+							
+							
+				iv.		Behavior Verification : 
+							Mocks are often used to verify that certain methods on the mocked object7s are called with specific arguments and a specific numbers of times. This help in ensuring that the code begin tested interacts with its dependencies.
+				
+				Example:
+				class TestXYZ{
+					@Mock
+					lateinit var useCases:  UsesCases
+					
+					@Mock
+					lateinit var repo:  Repository
+					
+					@Mock
+					lateinit var dataSources:  DataSources.
+					
+					
+					@Before
+					fun setUP(){
+						MockitoAnnotations.openMocks(this)
+						
+						OR
+						
+						MockitoAnnotations.initMocks(this)
+					}
+				
+				
+					@After
+					fun tearDown(){
+						Mockito.clearMocks(useCases, repo, dataSources)
+					}
+				}
+	
+	
+	
+	9. How to Mockk the class & Object
+			@Mock
+			lateinit var useCases:  UsesCases
+			
+		
+			@Before
+			fun setUP(){
+				MockitoAnnotations.openMocks(this)
+			}
+			
+			
+			
+	10.  How to clear the Mock
+			@Before
+			fun setUP(){
+				Mockito.clearMocks(<...Your Object Name...>)
+				
+				like
+				
+				Mockito.clearMocks(useCases)
+			}
+		
+		
+	
+	
+	
+	11.How to run  test method on particular coroutine thred 
+		i. runTest{} :
+				The "runTest" function is a part of the "kotlinx.coroutine.test" library and is specially designed for Coroutine Testing
+				When you are writing coroutine-based unit test cases and want to controll the execution of coroutine, specially when testing suspending funtion.
+				The runTest function provide a test-specific coroutine scope for more controlled testing of asynchronous.
+				
+				
+		ii.runBlocking{}
+				The "runBlocking" function is a coroutine builder provided by "kotlinx.coroutine" library.
+				It create new coroutine and blocks the current thread untill the coroutine completed.
+				It is often used in main thred function, Integration test, or others scenarios where blocking the main thread is acceptable.
+				
+		
+	12. How we can Mock the function and their response | Mocking functions
+			 
+			Example: 
+				when(genericClass.getData(userName, Password)).thenReturn(yourResponseData)
+				when(genericClass.getData(userID, any())).thenReturn(yourResponseData)
+				whenever(genericClass.func(any())).thenReturn(stubResponse)
+
+			
+			
+	12. What is GIVEN, MOCK, WHEN, THEN in unit Testing
+	
+	
+
+	
+	18. How to Load(Inject / start) & onload(clear / Un-Inject / stop) the KOIN Module
+			i. startKoin{modules(your moduleName)}
+			ii. stopKoin()
+			
+		
+	13. How to handle the response in unnit testing for complex method or ViewModel
+			1. Through Observer: What is Observer on Unit Testing
+			2. Through Response Dtaa
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------Mocking Library / Tools-------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+Mockk vs. Mockito:
+		Both are using for mocking the library for the JVM(Java vertual Machine) and they are commonly using in Java & Kotlin based Project for creating & mock object during unit testing.
+		Mockito and Mockk are written in Java and Kotlin, respectively, and since Kotlin and Java are interoperable, they can exist within the same project. 
+		Essentially, both libraries can be used interchangeably in these projects, but the preeminence of Kotlin has tipped the balance in favor of Mockk for most Kotlin projects.	
+		Both library serves similar puposes but there are some diffrences in Syntax, Features, & Design Philophies 
+		
+		1. Syntax and DSL:	
+			 i. Mockito: 
+					Uses a more traditional, Java-centric syntax
+					The syntax is traditional but can be verbose, especially when dealing with Kotlin Code.
+			ii. Mockk:
+					It is designed with more concise and expressive DSL (Domain-Specific Language) that take the advantage of Kotlin feature.
+					Syntax is often considered more kotlin-friendaly & concise.
+		
+		2. Nullability Handling:
+			i.  Mockito:
+					It does not support Nullability and we need to use @Nullable or @NotNull annotation to specifi nulability constraint.
+			ii. Mockk:
+					Provide better way for handle Nullability
+					
+		3. Coroutine Support
+			i.  Mockito:
+					Has limited support for mocking suspending function and working with coroutine.
+					Mockito 3 introduce some experimental coroutine support but it may not be as mature as in others libraries
+			ii. Mockk:
+					Has strong support for mocking the suspending function and working with coroutine.
+					
+		4. Staticv and Final class Mocking
+			i. 	Mockito:
+					Allows mocking of Interface, Class  but has limited support of mocking static method and final classes.
+					Additional library like - PowerMockito are often used for adcance scenario.
+			ii.	Mockk:
+					Supporting mocking of final class, Object & Static method provide more scenario in certain scenario.
+		
+		5. Spying
+			i.	Mockito:
+					Allows to create spyies, which are partial mocks of real object, allowing real method to be called while intercepting certain behavior.
+			ii. Mockk:
+					Provides similar spying capabilities, allowing you to partial mock real object.
+		
+		6.	Mocking Library in Kotlin
+			i. 	Mockito:
+					It is a java based library with kotlin support but while using it with kotling project / code, some kotlin specific feature feel less idiomatic.
+			ii.	Mockk: 
+					It is specially designed for Kotlin for taking full advantage of kotlin advance feature.
+			
+
+	
+	
+Some Important Method: 	
+	 what is every {...}  & When() : 
+		it Mockk based funtion / keyword which work same like When of Mockito for Mock the object or response
+		Stubbing the behavior of the getSum method using Mockito & Mockk
+		
+			Example: 
+				i. Mockito: 
+						'when'.(usesCase.getSum(2, 10)).thenReturn(12)
+						
+				ii. Mockk
+						every { usesCase.getSum(2, 10) } returns 12
+			
+	 
+	 
+	 
+	 what is verify(....):
+		Its is used in both (Mockito & Mockk) library for verify and it's just like assertion
+			
+			Example:
+					verify { usesCase.getSum(2, 10)}
+					
+		
+			
+	 What is coEvery(..)
+		it is used for mocking suspending functions, whereas Mockito uses "when"
+			
+			Example:
+					@Test
+					fun testSum() = runTest{
+							//Stubbing the behavior of the method
+							coEvery{ usesCase.getSum( 2, 10)} retruns 12 
+							
+							//Performing the test action
+							viewModel.getSum(2, 10)
+							
+							//Verifying that the sume was called with specific argument
+							coEvery { usesCase,getSum(2, 10)}
+					}
+		
+	 coJustRun(...)
+		it is used to mock the suspending function when you are only interested to ensuraing the function call but not with return data /Value.
+		used to just for run not for get the value
+		
+			Example: 
+					coJustRun{usesCase.getSume(2, 10)}
+					
+					
+	 What is spyk{}
+					
+					
+__________________________________________________________________________________________________________________________________
+
+	
+
+
+
+
+
+
+
+
+__________________________________________________________________________________________________________________________________________
+
+__________________________________________________________________________________________________________________________________________
+------------------------------------------------Instrumentation / Framwork Testing----------------------------------------------------
+__________________________________________________________________________________________________________________________________________
+Espresso(V 3.4):  https://developer.android.com/training/testing/espresso
+		Use Espresso to write concise, beautiful, and reliable Android UI tests.
+		Espresso is the latest Android test automation framework that got open-sourced by Google, making it available for developers and testers to hammer out their UIs. 
+		Espresso has an API that is small, predictable, easy to learn and built on top of the Android instrumentation framework. You can quickly write concise and reliable Android UI tests with it. 
+		It is supported on API level 8 (Froyo), 10 (Gingerbread), and 15 (Ice Cream Sandwich) and onwards.
+		It’s quite reliable, synchronizing with the UI thread and fast because there is no need for any sleeps (tests run on the same millisecond when an app becomes idle).
+		The term Espresso is of Italian origin, meaning Coffee. Espresso is a simple, efficient and flexible testing framework
+		
+		Espresso Testing Framework is an open-source framework created by Google for Android that allows QA to write tests on the user interface. It has a simple API, which easily adapts to the testing needs, and eliminates the complexity of managing different threads.
+
+		Espresso automatically synchronizes test actions with the UI of the application. The framework also ensures that your activity is started before the tests and closes after the tests run is completed. 
+		For this, Espresso provides @Rule variables to set up the ActivityTestRule objects. It also lets the test wait until all observed background activities have finished.
+
+
+		Example: 
+				onView(ViewMatcher)
+				 .perform(ViewAction)
+				 .check(ViewAssertion);
+
+
+				onData(ObjectMatcher)
+				 .DataOptions
+				 .perform(ViewAction)
+				 .check(ViewAssertion);
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+Components of Espresso
+		The main components of Espresso include:
+				i.		Espresso: 
+							It is an Entry point for interactions with views (via onView() and onData()). 
+							It also exposes APIs that are not necessarily tied to any view, such as pressBack(), pressBackUnconditionally(), etc.
+				
+				
+				ii.		ViewMatchers (Find a View):
+							It allows you to find an item in the view using different attributes like Id, Text, etc.
+							Espresso provides the onView() method to match and find the views. 
+							It accepts view matchers and returns ViewInteraction object to interact with the matched view
+							
+								Example:  onView(ViewMatchers()) is a ViewMatcher in the below command
+											onView(ViewMatcher)       // onView takes a viewMatcher like like Id, text, Tag, etc 
+											
+											onView(withId(R.id.my_view_id))
+											onView(withText("MyName"))
+											onView(withTagKey("TagA"))
+											
+											
+							The frequently used list of view matchers are described below
+								a)	withId(): withId() accepts an argument of type int and the argument refers the id of the view. It returns a matcher, which matches the view using the id of the view.
+											 
+											 Example: onView(withId(R.id.testView))
+											
+											
+								b)  withText(): withText() accepts an argument of type string and the argument refers the value of the view’s text property. It returns a matcher, which matches the view using the text value of the view. It applies to TextView only
+											
+											Example: onView(withText("Hello World!"))
+											
+											
+								c)	withContentDescription(): withContentDescription() accepts an argument of type string and the argument refers the value of the view’s content description property. It returns a matcher, which matches the view using the description of the view
+									
+											Example: onView(withContentDescription("blah"))
+											
+											
+								d)	hasContentDescription(): hasContentDescription() has no argument. It returns a matcher, which matches the view that has any content description.
+									
+											Example: onView(allOf(withId(R.id.my_view_id), hasContentDescription()))
+								
+								
+								e)	withTagKey(): withTagKey() accepts an argument of type string and the argument refers the view’s tag key. It returns a matcher, which matches the view using its tag key.
+								
+											Example: onView(withTagKey("blah"))
+											
+											
+								f)	withClassName(): withClassName() accepts an argument of type Matcher<String> and the argument refers the view’s class name value. It returns a matcher, which matches the view using its class name.
+								
+											Example: onView(withClassName(endsWith("EditText")))   ||  Example: onView(withClassName("android.widgit.EditText"))
+	
+	
+								g)	withHint(): withHint() accepts an argument of type Matcher<String> and the argument refers the view’s hint value. It returns a matcher, which matches the view using the hint of the view. 
+								
+											Example: onView(withClassName(endsWith("Enter name")))  ||  Example: onView(withClassName("Enter name"))
+
+
+								h)	withInputType(): withInputType() accepts an argument of type int and the argument refers the input type of the view. It returns a matcher, which matches the view using its input type. 
+								
+											Example: onView(withInputType(TYPE_CLASS_DATETIME))
+											
+											
+								i)	withResourceName(): ithResourceName() accepts an argument of type Matcher<String> and the argument refers the view’s class name value. It returns a matcher, which matches the view using resource name of the view.
+								
+											Example: onView(withResourceName(endsWith("res_name")))   || onView(withResourceName("my_res_name"))
+
+								
+								j)	withSpinnerText(): withSpinnerText() accepts an argument of type Matcher<String> and the argument refers the Spinner’s current selected view’s value. It returns a matcher, which matches the the spinner based on it’s selected item’s toString value. 
+											
+											Example: onView(withSpinnerText(endsWith("USA")))  ||  onView(withSpinnerText("USA"))
+											
+											
+								k)	withSubstring(): withSubString() is similar to withText() except it helps to test substring of the text value of the vie
+								
+											Example: onView(withSubString("Hello"))
+											
+											
+								l)	hasLinks(): hasLinks() has no arguments and it returns a matcher, which matches the view having links. It applies to TextView only
+										
+											Example: onView(allOf(withSubString("Hello"), hasLinks()))
+											
+											
+								m)	hasTextColor() : hasTextColor() accepts a single argument of type int and the argument refers the resource id of the color. It returns a matcher, which matches the TextView based on its color. It applies to TextView only.
+									
+											Example: onView(allOf(withSubString("Hello"), hasTextColor(R.color.Red)))
+
+
+								n)	hasEllipsizedText(): hasEllipsizedText() has no argument. It returns a matcher, which matches the TextView that has long text and either ellipsized (first.. ten.. last) or cut off (first…).
+								
+											Example: onView(allOf(withId(R.id.my_text_view_id), hasEllipsizedText()))
+
+
+								o)	hasMultilineText(): hasMultilineText() has no argument. It returns a matcher, which matches the TextView that has any multi line text.
+											
+											Example: onView(allOf(withId(R.id.my_test_view_id), hasMultilineText()))
+								
+								
+								p)	hasBackground(): hasBackground() accepts a single argument of type int and the argument refers the resource id of the background resource. It returns a matcher, which matches the view based on its background resources.
+									
+											Example: onView(allOf(withId("image"), hasBackground(R.drawable.your_drawable)))
+											
+								
+								q)	hasErrorText(): hasErrorText() accepts an argument of type Matcher<String> and the argument refers the view’s (EditText) error string value. It returns a matcher, which matches the view using error string of the view. This applies to EditText only.
+								
+											Example: onView(allOf(withId(R.id.editText_name), hasErrorText(is("name is required"))))  ||  onView(allOf(withId(R.id.editText_name), hasErrorText("name is required")))
+								
+								
+								r) isDisplayed(): isDisplayed() has no argument. It returns a matcher, which matches the view that are currently displayed.
+								
+											Example: onView(allOf(withId(R.id.my_view_id), isDisplayed()))
+											
+								
+								s)	isDisplayingAtLeast(): isDisplayingAtLeast() accepts a single argument of type int. It returns a matcher, which matches the view that are current displayed at least the specified percentage.
+								
+											Example: onView(allOf(withId(R.id.my_view_id), isDisplayingAtLeast(75)))
+								
+								
+								t)	isCompletelyDisplayed(): isCompletelyDisplayed() has no argument. It returns a matcher, which matches the view that are currently displayed completely on the screen
+								
+											Example: onView(allOf(withId(R.id.my_view_id), isCompletelyDisplayed()))
+
+
+								u)	isEnabled(): isEnabled() has no argument. It returns a matcher, which matches the view that is enabled.
+								
+											Example: onView(allOf(withId(R.id.my_view_id), isEnabled()))
+											
+								v) 	isClickable(): isClickable() has no argument. It returns a matcher, which matches the view that is click option.
+								
+											Example: onView(allOf(withId(R.id.my_view_id), isClickable()))
+											
+								x)	isSelected(): isSelected() has no argument. It returns a matcher, which matches the view that is currently selected.
+								
+											Example: onView(allOf(withId(R.id.my_view_id), isSelected()))
+											
+											
+								y)	isChecked():  isChecked() has no argument. It returns a matcher, which matches the view that is of type CompoundButton (or subtype of it) and is in checked state. 
+											
+											Example: onView(allOf(withId(R.id.my_view_id), isChecked()))
+
+								z)	isNotChecked() : isNotChecked() is just opposite to isChecked
+								
+											Example: onView(allOf(withId(R.id.my_view_id), isNotChecked()))
+
+								z1)	withParent(): withParent() accepts one argument of type Matcher<View>. The argument refers a view. It returns a matcher, which matches the view that specified view is parent view.
+											Example: onView(allOf(withId(R.id.childView), withParent(withId(R.id.parentView))))
+
+								z2)	hasSibling(): hasSibling() accepts one argument of type Matcher>View<. The argument refers a view. It returns a matcher, which matches the view that passed-in view is one of its sibling view. 
+											Example: onView(hasSibling(withId(R.id.siblingView)))
+
+								z3)	withChild(): withChild() accepts one argument of type Matcher<View>. The argument refers a view. It returns a matcher, which matches the view that passed-in view is child view. 
+											Example: onView(allOf(withId(R.id.parentView), withChild(withId(R.id.childView))))
+
+								z4)	hasChildCount(): hasChildCount() accepts one argument of type int. The argument refers the child count of a view. It returns a matcher, which matches the view that has exactly the same number of child view as specified in the argument.
+											Example: onView(hasChildCount(4))
+
+								z5)	hasMinimumChildCount(): hasMinimumChildCount() accepts one argument of type int. The argument refers the child count of a view. It returns a matcher, which matches the view that has at least the number of child view as specified in the argument.
+											Example: onView(hasMinimumChildCount(4))
+
+								z6)	hasDescendant(): hasDescendant() accepts one argument of type Matcher<View>. The argument refers a view. It returns a matcher, which matches the view that passed-in view is one of the descendant view in the view hierarchy. 
+											Example: onView(hasDescendant(withId(R.id.descendantView)))
+
+								z7)	isDescendantOfA(): isDescendantOfA() accepts one argument of type Matcher<View>. The argument refers a view. It returns a matcher, which matches the view that passed-in view is one of the ancestor view in the view hierarchy.
+											Example: onView(allOf(withId(R.id.myView), isDescendantOfA(withId(R.id.parentView))))
+
+
+
+						Some of the important method of ViewMatcher
+								User Properties related method
+										a) 	withID(<Int>)
+										b)	withText(<String>)
+										c)	withTagkey(<String>)
+										d)	withTagValue(<String>)
+										e)	hasContentDescription(<>)
+										f)	withContentDescription(<String>)
+										g)	withHint(<String>)
+										h)	withSpinnerText(<String>)
+										i)	hasLin()
+										j)	hasMultilineText()
+										k)	hasEllipsizedText()
+										
+										
+								UI Properties related method
+										a)	isDisplayed()
+										b)	isCompletelyDisplayed()
+										c)	isEnabled()
+										d)	isfocus()
+										e)	isClickable()
+										f)	isChecked()
+										g)	isNotChecked()
+										h)	isSelected()
+										i)	withEfectiveVisivility()
+										
+										
+								Object Matcher related method
+										a)	allOf(Matcher)
+										b)	anyOf(Matcher)
+										c)	is(....)
+										d)	not(...)
+										e)	startWith(<String>)
+										f)	endWith(<String>)
+										g)	instanceOf(<Class>)
+										
+										
+								Root Matcher Related method
+										a)	isFocuable()
+										b)	isTouchable()
+										c)	isDialog()
+										d)	withDecorView()
+										e)	isPlateformPopup()
+										
+										
+								Hierarchy related method
+										a)	withParent()
+										b)	withChild()
+										c)	hasSibling()
+										d)	hasRoot()
+										e)	hasDescendant()
+										f)	hasDescendantA()
+									
+										
+							
+
+
+					
+
+
+
+
+							
+				
+				
+				
+				iii.	ViewActions:
+							It is used for performing the actions on the view defined in ViewMatchers.
+							It allows you to execute actions on the elements such as click(), typeText(), etc.
+								
+								Example:  perform(ViewActions()) is a ViewAction in the following command
+											onView(ViewMatcher).perform(ViewAction) //perform takes a viewAction like pressing the button 
+											
+											onView(ViewMatchers).perform(click())
+											onView(ViewMatchers).perform(longClick())
+											onView(ViewMatchers).perform(scrollTo())
+											onView(withText("Hello World!")).perform(click());
+											
+											
+								Some important Assertion Method:
+									Click / Press Related method:
+											a)	click()
+											b) 	doubleClick()
+											c)	longClick()
+											d)	pressBack()
+											e)	pressIMEActionButton()
+											f)	pressKey(...)
+											g)	pressMenuKey()
+											h)	closeSoftKeyboard()
+											i)	openLink()
+									
+									
+									Gestures Related Method:
+											a)	scrollTo()
+											b) 	swipeLeft()
+											c)	swipeRight()
+											d)	swipeUp()
+											e)	swipeDown()
+											
+									Text:
+											a)	clearText()
+											b)	typeText(<String>)
+											c)	typeTextIntoFocusedView(<String>)
+											d)	replaceText()
+
+
+
+
+				
+				iv.		ViewAssertions:
+							It is used to assert that the view found using ViewMatchers and expected views are the same using match(), doesNotExist()
+							It validates a view state i.e., whether it is displayed or not.
+							Once onView matches and returns ViewInteraction object, any action can be invoked by calling “perform” method of ViewInteraction object and pass it with proper view actions
+								
+								Example:  matches(isDisplayed())  is a ViewAssertion
+											onView(ViewMatcher).perform(ViewAction).check(ViewAssertion); //check inspects if the output result is same as the expected result. 
+											
+											onView(ViewMatcher).perform(ViewAction).check(ViewAssertion).check(matches(isDisplayed())); 
+
+
+
+							Some important method of View Assertion Method
+									matches(ViewMatcher)
+									doesNotExist()
+									selectedDescendantMatch(...)
+									
+									Layout Assertion related method
+											a)	noEllipseizedText(Matcher)
+											b)	noMultilineButton()
+											c)	noOverlap([Matcher])
+											
+									Position Assertion related 
+											a).	isLeftOf(Matcher)
+											b). isRightOf(Matcher)
+											c)	isLeftAlignedWith(Matcher)
+											d)	isRightAlignedWith(Matcher)
+											e)	isAbove(Matcher)
+											f)	isBelow(Matcher)
+											g)	isButtomAlignedWith(Matcher)
+											h)	isTopAlignedWith(Matcher)
+
+
+
+							Some important method of Assertion 
+									i.		fail() − To explicitly make a test case fail.
+									ii.		assertTrue(boolean test_condition) − Checks that the test_condition is true
+									iii.	assertFalse(boolean test_condition) − Checks that the test_condition is false
+									iv.		assertEquals(expected, actual) − Checks that both values are equal
+									v.		assertNull(object) − Checks that the object is null
+									vi.		assertNotNull(object) − Checks that the object is not null
+									vii.	assertSame(expected, actual) − Checks that both refers same object.
+									viii.	assertNotSame(expected, actual) − Checks that both refers different object.
+										
+			
+			
+			
+			
+				v.	Data Options:
+								i.		isAdapterView(Matcher)
+								ii.		atPosition(<Integer>)
+								iii.	onChildView(Matcher)
+						
+			
+			
+		Hamcrest Library
+				Hamcrest library is an important library in the scope of espresso testing framework. Hamcrest is itself a framework for writing matcher objects. Espresso framework extensively uses the Hamcrest library and extend it whenever necessary to provide simple and extendable matchers.
+				Hamcrest provides a simple function assertThat and a collection of matchers to assert any objects
+				
+				Logical based matchers
+						i.		allOf − accept any number of matchers and matches only if all matchers are succeeded.
+
+						ii.		anyOf − accept any number of matchers and matches if any one matcher succeeded.
+
+						iii.	not − accept one matcher and matches only if the matcher failed and vice versa.
+
+
+				Text based matchers
+						i.		equalToIgnoringCase − used to test whether the actual input equals the expected string ignoring case.
+
+						ii.		equalToIgnoringWhiteSpace − used to test whether the actual input equals the specified string ignoring case and white spaces.
+
+						iii.	containsString − used to test whether the actual input contains specified string.
+
+						iv.		endsWith − used to test whether the actual input starts with specified string.
+
+						v.		startsWith − used to test whether actual the input ends with specified string.
+			
+			
+				Number based matchers
+						i.		closeTo − used to test whether the actual input is close to the expected number.
+
+						ii.		greaterThan − used to test whether the actual input is greater than the expected number.
+
+						iii.	greaterThanOrEqualTo − used to test whether the actual input is greater than or equal to the expected number.
+
+						iv.		lessThan − used to test whether the actual input is less than the expected number.
+
+						v.		lessThanOrEqualTo − used to test whether the actual input is less than or equal to the expected number.
+				
+				
+				Object based matchers
+						i.		equalTo − used to test whether the actual input is equals to the expected object
+
+						ii.		hasToString − used to test whether the actual input has toString method.
+
+						iii.	instanceOf − used to test whether the actual input is the instance of expected class.
+
+						iv.		isCompatibleType − used to test whether the actual input is compatible with the expected type.
+
+						v.		notNullValue − used to test whether the actual input is not null.
+
+						vi.		sameInstance − used to test whether the actual input and expected are of same instance.
+
+						vii.	hasProperty − used to test whether the actual input has the expected property
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+Some Important Method of Espresso:
+Espresso Cheat Sheet: https://android.github.io/android-test/downloads/espresso-cheat-sheet-2.1.0.pdf
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+Annotations
+	The JUnit framework uses annotation extensively. Some of the important annotations are as follows in execution order
+		
+		class A {
+		
+			@BeforeClass
+
+				@Rule
+
+				@Before
+
+					@Test
+
+				@After
+
+			@AfterClass
+		}
+
+
+
+
+______________________________________________________________________________________________________________________________________
+Add Espresso Dependencies
+		Step 1 :
+				Open your app’s build.gradle file where you have mentioned the dependencies of the app. This is not the top-level build.gradle file but app/build.gradle.
+
+		Step 2 :
+				Add the following code lines inside dependencies:
+						dependencies {
+							androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+							androidTestImplementation 'androidx.test:runner:1.4.0'
+							androidTestImplementation 'androidx.test:rules:1.4.0'
+						}
+		Step 3 :
+				Set the instrumentation runner. Add to the same build.gradle file the following below line in android.defaultConfig:
+						defaultConfig {
+							testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+						}
+
+		Step 4:
+				Turn off animations from the Android device
+				Navigate to Settings > Developer options and turn off the following options: 
+					Window animation scale
+					Transition animation scale
+					Animator duration scale
+
+
+
+
+
+
+
+______________________________________________________________________________________________________________________________________
+Workflow of Espresso Testing Framework
+		Workflow of an espresso test case is as described below,
+		
+			i.		As we learned earlier, Android JUnit runner, AndroidJUnit4 will run the android test cases. The espresso test cases need to be marked with @RunWith(AndroidJUnut.class). First, AndroidJUnit4 will prepare the environment to run the test cases. It starts either the connected android device or emulator, installs the application and makes sure the application to be tested is in ready state. It will run the test cases and report the results.
+
+			ii.		Espresso needs at least a single JUnit rule of type ActivityTestRule to specify the activity. Android JUnit runner will start the activity to be launched using ActivityTestRule.
+
+			iii.	Every test case needs a minimum of single onView or onDate (used to find data based views like AdapterView) method invocation to match and find the desired view. onView or onData returns ViewInteraction object.
+
+			iv.		Once ViewInteraction object is returned, we can either invoke an action of the selected view or check the view for our expected view using assertion.
+
+			v.		Action can be invoked using perform method of ViewInteraction object by passing any one of the available view actions.
+
+			vi.		Assertion can be invoked using check method of ViewInteraction object by passing any one of the available view assertions
+			
+			Example:
+					package com.tutorialspoint.espressosamples.helloworldapp;
+					import android.content.Context;
+					import androidx.test.InstrumentationRegistry;
+					import androidx.test.rule.ActivityTestRule;
+					import androidx.test.runner.AndroidJUnit4;
+					import org.junit.Rule;
+					import org.junit.Test;
+					import org.junit.runner.RunWith;
+					import static androidx.test.espresso.Espresso.onView;
+					import static androidx.test.espresso.matcher.ViewMatchers.withText;;
+					import static androidx.test.espresso.assertion.ViewAssertions.matches;
+					import static org.junit.Assert.*;
+					
+					@RunWith(AndroidJUnit4.class)
+					public class ExampleInstrumentedTest {
+					   @Rule
+					   public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
+					   
+					   @Test
+					   public void view_isCorrect() {
+						  onView(withText("Hello World!")).check(matches(isDisplayed()));
+					   }
+					   
+					   @Test
+					   public void useAppContext() {
+						  // Context of the app under test.
+						  Context appContext = InstrumentationRegistry.getTargetContext();
+						  assertEquals("com.tutorialspoint.espressosamples.helloworldapp", appContext.getPackageName());
+					   }
+					   
+					}
+
+__________________________________________________________________________________________________________________________________________
+__________________________________________________________________________________________________________________________________________
+__________________________________________________________________________________________________________________________________________
+

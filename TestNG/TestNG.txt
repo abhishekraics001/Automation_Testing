@@ -1,0 +1,747 @@
+TestNG
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+What is TestNG
+TestNG is a very important framework when you are actually developing the framework from scratch level.
+TestNG provides you full control over the test cases and the execution of the test cases. Due to this reason, TestNG is also known as a testing framework.
+Cedric Beust is the developer of a TestNG framework.
+If you want to run a test case A before that as a pre-request you need to run multiple test cases before you begin a test case A. You can set and map with the help of TestNG so that pre-request test cases run first and then only it will trigger a test case A. In such way, you can control the test cases.
+TestNG framework came after Junit, and TestNG framework adds more powerful functionality and easier to use.
+It is an open source automated TestNG framework. In TestNG, NG stands for "Next Generation".
+TestNG framework eliminates the limitations of the older framework by providing more powerful and flexible test cases with help of easy annotations, grouping, sequencing and parametrizing.
+
+In TestNG, annotations are easier to understand than Junit.
+It produces the HTML reports for implementation.
+It also generates the Logs.
+In TestNG, there is no constraint available such as @beforeclass and @afterclass which is present in Junit.
+TestNG enables you to group the test cases easily which is not possible in JUnit.
+TestNG supports three additional levels such as @Before/After suite, @Before/AfterTest, and Before/AfterGroup.
+TestNG does not extend any class. TestNG framework allows you to define the test cases where each test case is independent of other test cases.
+It allows you to run the test cases of a particular group. Let's consider a scenario where we have created two groups such as 'Smoke' and 'Regression'. If you want to execute the test cases in a 'Regression' group, then this can only be possible in the TestNG framework.
+Parallel execution of test cases, i.e., running multiple test cases is only possible in the TestNG framework.
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+Feature of TestNG
+	1. Before/After Annotation:  
+			These annotation are used to set the variable or configuraction before the start of execution of test methods and clen-up all the variable after the execution ends.
+				i.   	@BeforeSuite 	: 	The @BeforeSuite annotated method will run before the execution of all the test methods in the suite.
+				ii.	 	@BeforeTest		: 	The @BeforeTest annotated method will be executed before the execution of all the test methods of available classes belonging to that folder.	
+				iii. 	@BeforeClass	:	The @BeforeClass annotated method will be executed before the first method of the current class is invoked.
+				iv.	 	@BeforeMethod	:	The @BeforeMethod annotated method will be executed before each test method will run.
+				v.   	@Test			:	The @Test attribute is the most important and commonly used annotation of TestNG. It is used to mark a class or a method as part of the test
+				vi.  	@AfterMethod	:	The @AfterMethod annotated method will run after the execution of each test method.
+				vii.	@AfterClass		:	The @AfterClass annotated method will be invoked after the execution of all the test methods of the current class.
+				viii.   @AfterTest		: 	The @AfterTest annotated method will be executed after the execution of all the test methods of available classes belonging to that folder.
+				vix. 	@AfterSuite		: 	The @AfterSuite annotated method will run after the execution of all the test methods in the suite.
+				vx. 	@BeforeGroups	:	The @BeforeGroups annotated method run only once for a group before the execution of all test cases belonging to that group.
+				vxi. 	@AfterGroups	:	The @AfterGroups annotated method run only once for a group after the execution of all test cases belonging to that group.
+				vxii	@Parameters
+			
+			
+			
+			
+			
+			
+	
+	2.	TestNG Annotation Attributes:	This attribute is used to provide data to the test method directly in data-driven testing
+				i.		Description		:	
+								It is a string which is attached to the @Test annotation that describes the information about the test. 
+								
+								Example: @Test(description="This is my Test case : 1")  
+								
+								
+								
+								
+								
+								
+				ii.		TimeOut			:	
+								If one of the test cases is taking a long time due to which other test cases are failing. 
+								To overcome such situation, you need to mark the test case as fail to avoid the failure of other test cases. 
+								The timeOut is a time period provided to the test case to completely execute its test case.
+								
+								Example: @Test(timeOut=200)  
+
+
+
+
+				
+				
+				iii.	Priority		:	
+								When no 'priority' attribute is specified then the TestNG will run the test cases in alphabetical order. 
+								Priority determines the sequence of the execution of the test cases. The priority can hold the integer values between -5000 and 5000. 
+								When the priority is set, the lowest priority test case will run first and the highest priority test case will be executed last. 
+								Suppose we have three test cases and their priority values are -5000, 0, 15, then the order of the execution will be 0,15,5000. 
+								If priority is not specified, then the default priority will be 0.
+								
+								Example: @Test(priority=2)  
+				
+				
+				
+				
+				
+				iv.		DependsOnMethods:	
+								When the second test method wants to be dependent on the first test method, then this could be possible by the use of "dependOnMethods" attribute.
+								if the first test method fails, then the dependent method on the first test method, i.e., the second test method will not run.
+								
+								Example: 
+										@Test(description="This is my Test case : 1")
+										public void MyTestCase1(){ }
+										
+										
+										@Test(description="This is my Test case : 2")
+										public void MyTestCase2(){ }
+										
+										
+										@Test(dependsOnMethods= {"MyTestCase1"})
+										public void MyTestCase(){ }
+										
+										
+										@Test(dependsOnMethods= {"MyTestCase1" , "MyTestCase2"})
+										public void MyTestCase(){ }
+										
+										
+								
+								
+										
+								
+				v.		Enabled			:	
+								The 'enabled' attribute contains the boolean value. By default, its value is true. 
+								If you want to skip some test method, then you need to explicitly specify 'false' value.
+								
+								Example: @Test(enabled=false)  
+				
+				
+				
+				vi.		Groups			:	
+
+
+
+	
+	
+	2. XML Based Test Configuraction.
+			Test suite in a Testing are mainly configure by using the XML-based file. Testing.xml file is used to organize and run the test suites. 
+			The Testing.xml file is used to create the test suites by using classes, test methods, packages as well as by using the test group.
+			It is also used to pass the parameters to test class or methods.
+			
+			
+			
+	3. Dependent Methods
+			Dependency is a feature of Testing that allows a test method to depend on the single or group of  test methods.
+			Dependency works on the principle "Depand-on-Method" which must be either in same class or in the inherrited base class
+	
+	
+	4. Group /Groups
+			TestNG groups allows you to group the test methods. You can declare the methods in a groups as well as you can declare the groups within a groups.
+			
+		
+		
+	5. Depandent Group
+			Similar to the Dependant methods, test methods in a group can depend on the test methods of anothers group.
+	
+	
+	
+	
+	
+	
+	
+	6. Parameterization of test methods
+			This feature allows us to pass the argument as parameters and  this achived by using @Parameters annotation.
+			We can pass the parameters to the method in two way
+				i)  testing.xml:
+						Suppose we want to set the global variables such url settings, username, password or API Keys, there are some values which are constant in all the test cases, in such case we use the TestNG Parameters
+						TestNG Parameters are present in the xml file. They can be applied either inside the tag or tag. 
+						If we want to apply the parameters to all the test cases, then the parameters are applied inside the tag. 
+						If the parameter is specific to a particular folder, then the parameter is applied within a tag.
+						
+						Example:
+							public class Addition { 
+							
+								@Test  
+								@Parameters({"a","b"})  
+								public void add2(int c, int d) {  
+									int sum=c+d;  
+									System.out.println("Sum of two numbers : "+sum);  
+								} 
+
+								@Test  
+								@Parameters({"a","b","c"})  
+								public void add3(int c, int d, int c) {  
+									int sum=c+d+c;  
+									System.out.println("Sum of two numbers : "+sum);  
+								} 								
+							}  
+							
+							
+							public class Substractor { 
+							
+								@Test  
+								@Parameters({"a","b"})  
+								public void sub2(int c, int d) {  
+									int sub=c-d;  
+									System.out.println("Sub of two numbers : "+sub);  
+								} 
+
+								@Test  
+								@Parameters({"a","b","c"})  
+								public void sub3(int c, int d, int c) {  
+									int sub=c-d-c;  
+									System.out.println("Sub of three numbers : "+sub);  
+								} 								
+							}
+
+
+
+
+							<?xml version="1.0" encoding="UTF-8"?>
+							<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+							<suite name="Suite">
+								<test name="Addition of Multiple Number">
+									<parameter name="a" value="20"/>
+									<parameter name="b" value="30"/>
+									<parameter name="c" value="50"/>
+									<classes>
+										<class name= ".Addition"/>
+									</classes>
+								</test>
+								<test name="Substractor of Multiple Number">
+									<parameter name="a" value="10"/>
+									<parameter name="b" value="20"/>
+									<parameter name="c" value="30"/>
+									<classes>
+										<class name= ".Substractor"/>
+									</classes>
+								</test>
+							</suite>
+							<!-- Suite -->  
+							
+				
+
+
+
+
+						
+				ii)  DataProviders
+				
+				
+				
+				
+	
+	
+	7. Data Driven Testing
+			DataProviders is a data feeder method that executes the test method with multiple sets of data.
+	
+	
+	
+	8. Multi-threding execution
+			Multithreaded execution is the parallel execution of tests. Multi-threding means the execution of multiple parts of software at the same time.
+	
+	
+	
+	9. Better Reporting
+			TestNG provide XML & HTML reports by default for test execution
+	
+	
+	10. Open API
+			TestNG contains the open API means API i spublicly available for the developers
+------------------------------------------------------------------------------------------------------------------------------------------------------
+			
+			
+			
+			
+------------------------------------------------------------------------------------------------------------------------------------------------------			
+what is testing.xml file?
+what is XML Based Test Configuraction in TestNG?.
+what is the Importance of XML file in TestNG Configuration?.
+
+			Test suite in a Testing are mainly configure by using the XML-based file. Testing.xml file is used to organize and run the test suites. 
+			The Testing.xml file is used to create the test suites by using classes, test methods, packages as well as by using the test group.
+			It is also used to pass the parameters to test class or methods.
+			Allos to add group dependency
+			Allows to priorities to the test cases
+			Allows to configure parallel execution of test cases
+			Allows to parameters the test cases.
+			
+	How to create testing.xml file?
+		Method 1:
+				a) Right-click on the project folder & towards the bottom of the list, select TestNG and then “Convert to TestNG.”
+				b) Click on Next
+				c) The next window that pops up will have the refactored source code, which would be applicable after you click Finish.
+				d) A new addition to your project directory would be displayed named as testng.xml.
+				e) Double click on testng.xml to open the xml file
+
+
+		Method 2:
+				a) Right-click on Project, then New, and finally select File.
+				b) Next, enter the following file name “testng.xml” and then click on Finish.
+				c) In this step, you will have to enter the XML code manually. That is how the two methods differ from each other. After entering the XML code, you can select a name for your liking suite and class. This is what a basic XML file looks like-
+			
+			
+	How to run testing.xml file?
+			Right click on the testng.xml file and then move down to the Run As and then click on the1 TestNG Suite.
+
+	Example:
+			________________________TestModule1.java________________________________________
+			import org.testng.annotations.Test;  		  
+			public class TestModule1 { 
+			
+				@Test  
+				public void test1(){  
+					System.out.println("Hello Test1!!");  
+				}  
+				  
+				@Test  
+				public void test2() {  
+					System.out.println("Hello test2");  
+				}
+				
+				@Test  
+				public void test22() {  
+					System.out.println("Hello test22");  
+				}
+			}  
+
+
+
+			________________________TestModule1.java________________________________________
+			import org.testng.annotations.Test;  
+			  
+			public class TestModule2 {  
+			
+				 @Test  
+				 public void test3(){  
+					 System.out.println("Hello test3");  
+				 }  
+				 
+				 @Test  
+				 public void test4(){  
+					 System.out.println("Hello test4");  
+				 } 
+				 
+				 @Test  
+				 public void test5(){  
+					 System.out.println("Hello test5");  
+				 }
+
+				 @Test  
+				 public void test55(){  
+					 System.out.println("Hello test55");  
+				 }
+			}   
+
+
+
+			________________________testing.xml________________________________________			
+			<?xml version="1.0" encoding="UTF-8"?>  
+			<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">  
+			<suite name="loan_department">  
+			  <test name="Personal_loan">  
+				  <classes>  
+					  <class name=".TestModule1"/>  
+					  <class name=".TestModule2"/>   
+				  </classes>  
+			  </test>  
+			</suite> <!-- Suite -->
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+Exclude/Include test cases
+	In TestNG, test cases can be disabled/skip in two ways:
+		1.	You can disable the test case in a @Test annotation.
+				
+				@Test(enabled=false) //Disable this test case for execution
+				public void test1(){  
+					System.out.println("Hello test1!!");  
+				}  
+				  
+				  
+				@Test(enabled=true) //Enable this test case for execution
+				public void test2(){  
+					System.out.println("Hello test2!!);  
+				}} 
+				  
+				  
+				@Test   //Default all test cases are enable for execution untill unless you do the medification with custome configuraction
+				public void test3() {  
+					System.out.println(""Hello test3!!");  
+				}} 
+				
+				
+				
+		2.	You can disable the test case in the XML file.
+				<?xml version="1.0" encoding="UTF-8"?>  
+					<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">  
+					<suite name="loan_department">  
+					    <test name="Personal_loan">  
+						    <classes>  
+								<class name=".TestModule1"/>   //Default all test method will run from module1(TestModule1) class
+							</classes>  
+						</test> <!-- Test -->  
+						
+						<test name="Car_loan">  
+							<classes>  
+							    <class name=".TestModule1">  
+									  <methods>  
+											<exclude name = "test1"/>   //all exclude method will skip/exclude from module2(TestModule1) class
+											
+											//-------------OR------------
+											
+											<include name="test3"/>    //Only include method will run from module2(TestModule1) class
+									  </methods>  
+							    </class>  
+						    </classes>  
+					    </test>  
+					</suite> <!-- Suite -->
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+Running test cases with Regex   | Run | Skip test method which start with or end or contains
+
+				<?xml version="1.0" encoding="UTF-8"?>  
+					<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">  
+					<suite name="loan_department">  
+					    <test name="Personal_loan">  
+						    <classes>  
+								<class name=".TestModule1"/>   
+								 <methods>
+										<include name="test2.*"/>  //Run only those method  which starting with test2..... from module1(TestModule1) class
+								 </methods>
+							</classes>  
+						</test> <!-- Test -->  
+						
+						<test name="Car_loan">  
+							<classes>  
+							    <class name=".TestModule1">  
+									  <methods>  
+											<exclude name = "test5.*"/>   // exclude all method  which starting with test5.... from module2(TestModule1) class
+									  </methods>  
+							    </class>  
+						    </classes>  
+					    </test>  
+					</suite> <!-- Suite -->
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+TestNG Groups
+		TestNG Groups allow you to perform groupings of different test methods. Grouping of test methods is required when you want to access the test methods of different classes.
+		
+		package com.javatpoint;  
+		import org.testng.annotations.Test;  
+		public class Groups1 {  
+		
+			@Test(groups= {"Group A"})  
+			public void testcase1(){  
+				System.out.println("Test case belonging to Group A");  
+			}  
+			
+			@Test(groups= {"Group A","Group B"})  
+			public void testcase2() {  
+				System.out.println("Test case belonging to both Group A and Group B");  
+			} 
+			
+			@Test(groups= {"Group B"})  
+			public void testcase3(){  
+				System.out.println("Test case belonging to Group B");  
+			}  
+		}
+		
+		
+		
+		
+		package com.javatpoint;  
+		import org.testng.annotations.Test;  
+		public class Groups2 {  
+		
+			@Test(groups= {"Group B"})  
+			public void testcase4(){  
+				System.out.println("Test case belonging to Group A");  
+			}  
+			
+			@Test(groups= {"Group B","Group A"})  
+			public void testcase5() {  
+				System.out.println("Test case belonging to both Group A and Group B");  
+			} 
+			
+			@Test(groups= {"Group A"})  
+			public void testcase6(){  
+				System.out.println("Test case belonging to Group B");  
+			}  
+		}
+		
+		
+		1.	Test cases within Groups
+					<?xml version="1.0" encoding="UTF-8"?>
+					<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+					<suite name="test_suite">
+						<groups>
+							<run>
+								<include name="Group A"/>
+							</run>
+						</groups>
+						<test name="Group Tets Case : 1">
+							<classes>
+								<class name=".Groups1"/>
+							</classes>
+						</test>
+						<!-- Test -->
+						<test name="Group Tets Case : 2">
+							<classes>
+								<class name=".Groups2"/>
+							</classes>
+						</test>
+						<!-- Test -->
+					</suite>
+					<!-- Suite --> 
+		
+		
+		
+		
+		
+		2.	Tests belonging to multiple Groups
+					<?xml version="1.0" encoding="UTF-8"?>
+					<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+					<suite name="test_suite">
+						<test name="Group Tets Case : 1">
+							<groups>
+								<run>
+									<include name="Group A"/>
+								</run>
+							</groups>
+							<classes>
+								<class name=".Groups1"/>
+								<class name=".Groups2"/>
+							</classes>
+						</test>
+						<!-- Test -->
+					</suite>
+					<!-- Suite -->
+		
+		
+		
+		
+		
+		
+		3.	Including/Excluding Groups
+					<?xml version="1.0" encoding="UTF-8"?>
+					<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+					<suite name="test_suite">
+						<test name="Group A">
+							<groups>
+								<run>
+									<include name="Group A"/>
+									<exclude name="Group A"/>
+								</run>
+							</groups>
+							<classes>
+								<class name=".Groups1"/>
+							</classes>
+						</test>
+						<!-- Test -->
+						<test name="Group B">
+							<groups>
+								<run>
+									<include name="Group B"/>
+									<exclude name="Group A"/>
+								</run>
+							</groups>
+							<classes>
+								<class name=".Groups2"/>
+							</classes>
+						</test>
+						<!-- Test -->
+					</suite>
+					<!-- Suite -->
+		
+
+		4. Using Regular Expressions
+					<?xml version="1.0" encoding="UTF-8"?>
+					<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+					<suite name="test_suite">
+						<test name="Including test cases">
+							<groups>
+								<run>
+									<include name="Group.*"/>
+								</run>
+							</groups>
+							<classes>
+								<class name=""/>
+							</classes>
+						</test>
+						<!-- Test -->
+					</suite>
+					<!-- Suite --> 
+		
+		
+		
+		
+		5. Groups in Groups
+					<?xml version="1.0" encoding="UTF-8"?>
+					<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+					<suite name="test_suite">
+						<test name="Groups in Groups">
+							<groups>
+								<define name="Group Login - P1">
+									<include name="Group A"/>
+									<include name="Group B"/>
+								</define>
+								<run>
+									<include name="Group B"/>
+								</run>
+							</groups>
+							<classes>
+								<class name=".Groups2"/>
+							</classes>
+						</test>
+						<!-- Test -->
+					</suite>
+					<!-- Suite -->
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+TestNG Listeners
+		TestNG provides the @Listeners annotation which listens to every event that occurs in a selenium code. 
+		Listeners are activated either before the test or after the test case. It is an interface that modifies the TestNG behavior. 
+		For example, when you are running a test case either through selenium or appium and suddenly a test case fails. 
+		We need a screenshot of the test case that has been failed, to achieve such scenario, TestNG provides a mechanism, i.e., Listeners. 
+		When the test case failure occurs, then it is redirected to the new block written for the screenshot.
+		
+		Note: Note: When listeners are added to multiple classes then it could be an error prone. If listeners are implemented through the testng.xml file, then they are applied to all the classes.
+		
+		
+		
+		Impotant method for ITestListener:
+		
+			i.		onTestStart()	: 	An onTestStart() is invoked only when any test method gets started.
+
+			ii.		onTestSuccess()	: 	An onTestSuccess() method is executed on the success of a test method.
+			
+			iii.	onTestFailure()	: 	An onTestFailure() method is invoked when test method fails.
+
+			iv.		onTestSkipped()	: 	An onTestSkipped() run only when any test method has been skipped.
+
+			v.		onTestFailedButWithinSuccessPercentage(): This method is invoked each time when the test method fails but within success percentage.
+
+			vi.		onStart()		: 	An onStart() method is executed on the start of any test method.
+
+			vii.	onFinish(): An onFinish() is invoked when any test case finishes its execution.
+			
+			
+				import org.testng.Assert;  
+				import org.testng.annotations.Test;  
+				public class Testcases {  
+				
+					@Test  
+					public void testtopass(){  
+						Assert.assertTrue(true);  
+					}
+					
+					@Test  
+					public void testtofail(){  
+						Assert.assertFalse(false);  
+					}  
+				}
+				
+				
+				
+				
+				
+				
+				import org.testng.ITestContext;  
+				import org.testng.ITestListener;  
+				import org.testng.ITestResult;  
+				  
+				public class Listener implements ITestListener{  
+				  
+					@Override  
+					public void onTestStart(ITestResult result) {  
+						// TODO Auto-generated method stub  
+					}  
+				  
+					@Override  
+					public void onTestSuccess(ITestResult result) {  
+						// TODO Auto-generated method stub  
+						System.out.println("Success of test cases and its details are : "+result.getName());  
+					}  
+				  
+					@Override  
+					public void onTestFailure(ITestResult result) {  
+						// TODO Auto-generated method stub  
+						System.out.println("Failure of test cases and its details are : "+result.getName());  
+					}  
+				  
+					@Override  
+					public void onTestSkipped(ITestResult result) {  
+						// TODO Auto-generated method stub  
+						System.out.println("Skip of test cases and its details are : "+result.getName());  
+					}  
+				  
+					@Override  
+					public void onTestFailedButWithinSuccessPercentage(ITestResult result) {  
+						// TODO Auto-generated method stub  
+						System.out.println("Failure of test cases and its details are : "+result.getName());  
+					}  
+				  
+					@Override  
+					public void onStart(ITestContext context) {  
+						// TODO Auto-generated method stub
+					}  
+				  
+					@Override  
+					public void onFinish(ITestContext context) {  
+						// TODO Auto-generated method stub
+					}  
+				}
+
+
+
+
+				<?xml version="1.0" encoding="UTF-8"?>
+				<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+				<suite name="Suite">
+					<listeners>
+						<listener class-name=".Listener"/>
+					</listeners>
+					<test name="Listeners Program">
+						<classes>
+							<class name=".Testcases"></class>
+						</classes>
+					</test>
+				</suite>
+				<!-- Suite -->
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------

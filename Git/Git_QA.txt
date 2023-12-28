@@ -1,0 +1,741 @@
+What is Git
+
+
+
+What is GitHub
+
+
+
+whta is Diff b/w Git and GitHub
+
+
+
+Whta is Diff b/w Git and SVN
+
+
+
+
+Whta is Working Directoy
+	When you worked on your project and made some changes, you are dealing with your project's working directory. This project directory is available on your computer's filesystem. 
+	All the changes you make will remain in the working directory until you add them to the staging area.
+
+
+
+What is Stageing Area
+	The staging area can be described as a preview of your next commit. When you create a git commit, Git takes changes that are in the staging area and make them as a new commit. 
+	You are allowed to add and remove changes from the staging area. 
+	The staging area can be considered as a real area where git stores the changes.
+	Git doesn't have a dedicated staging directory where it can store some objects representing file changes (blobs). Instead of this, it uses a file called index.
+
+
+
+What is Repository
+	In Git, Repository is like a data structure used by GIt to store metadata for a set of files and directories. 
+	It contains the collection of the files as well as the history of changes made to those files. 
+	Repositories in Git is considered as your project folder. A repository has all the project-related data. Distinct projects have distinct repositories.
+
+
+
+
+
+How to get All/List remote Branch Name | Will display all remote branch name
+	git branch -r
+
+
+
+
+How to get All/List local Branch Name | Will display all local branch name
+	git branch
+
+
+
+How to get All/List local & remote Branch Name | Will display all local & remote branch name
+	git branch -a
+
+
+
+Status : 
+	show the status of all modify file / chnages in your local directory (but not from staging area) which all will go/staged for next commits 
+	
+	Command =>
+		git status
+		
+		
+		
+
+
+Add : 
+	Add/staged your file / folder for your next commits
+	
+	Command =>
+		git add . 	| Will add all new file / folder from your 
+		
+		git add <yourFileFolderName> 	| Will add particular new file / folder from your 
+
+
+
+Whta is Git checkout  :  git checkout <branch>
+	The git checkout command lets you navigate between the branches created by git branch . 
+	Checking out a branch updates the files in the working directory to match the version stored in that branch, and it tells Git to record all new commits on that branch
+	 Updates files in the working tree to match the version in the index or the specified tree.
+	
+
+
+
+
+What is Git Fetch : git featch 
+	Used to fetch all changes from the remote repository to the local repository without merging into the current working directory. 
+	Review of commits and changes can be done or you will be able to see all remore commits for your remore branch and after that you can decide merge that chnages into your local Directory and that why there is No possibility of merge conflicts
+	Git Fetch command is used to fetch all changes from the remote repository to the local repository. 
+	It doesn’t make any changes to the current working directory. It stores all the changes in a separate branch called the remote-tracking branch. git merge or git rebase command is used to merge these changes into our current working directory.
+	
+	Command =>
+		git fetch
+		git merge origin/<yourBranchName>  | git merge origin/master
+		
+		OR
+		
+		git pull --all  |   To fetch all branch from remote
+
+
+
+
+
+
+What is Git Pull : git pull
+	Brings the copy of all the changes from a remote repository and merges them into the current working directory. 
+	There is no option for review the remote chnage and it's directally merge into your local directory that why there is more chnages of conflicts if the remote & the local repositories have done changes at the same place..
+	Git Pull command is used to fetch all changes from the remote repository to the current working directory. 
+	It automatically try to merge or rebase them into our current working directory. It is the combination of git fetch and git merge or git rebase. It can generate merge conflicts if there are conflict changes between our local and remote branches.
+
+	Command =>
+			git pull origin <yourBranchName>  | git pull origin master
+			
+			
+
+
+What is Diff b/w Git Fetch and Pull
+	https://www.geeksforgeeks.org/git-difference-between-git-fetch-and-git-pull/
+	
+	
+	
+	
+
+
+What is Merge
+	The easiest option to merge the branches is using the git merge command. Git merge safeguards the histories of both the repositories.
+	Git Merge merges two branches to create a “feature” branch.
+	Git Merge safeguards history.
+	Git Merge is more suitable for projects with the less active main branch.
+	Git Merge is preferable for large no. of people working on a project.
+	Git Merge logs show you the complete history of commit merging. All the commits on a feature branch are combined into a single commit on the master branch.
+	
+	Command =>
+		git checkout feature   |  git checkout <branch name in which you want to merge>
+		git merge main    |  git merge <branch name which you want to merge into current branch>
+		
+		OR
+		
+		git merge feature main   |  git merge <name of branch in which you want to merge> <name of branch whichyou want to merge into current branch>
+		
+	
+	
+
+
+What is Git ReBase
+	we rebase the entire feature branch to merge it with the main branch. Git Rebase rebases the feature branch to add the feature branch to the main branch.
+	Git Rabse doesn’t safeguard history
+	Git Rebase is suitable for projects with frequently active main branches.
+	Git Rebase is preferable for small groups of people.
+	The major benefit of using git rebase is it provides a cleaner merge history. It works linearly, removing the unnecessary merge commits, unlike git merge
+	Git Rebase logs are linear. As the commits are rebased, the history is altered to reflect this. All commits are rebased, and the same number of commits are added to the master branch.
+	Git rebase takes all the changes, and compresses them into a single patch and integrates this new patch onto the target branch. Then, it moves the completed work from one branch to another, typically the master branch. In the process, rebase flattens the history, removing unwanted entries
+	
+	
+	Command =>
+		git rebase main    |  git rebase <branch name which you want to merge into current branch>
+		
+
+	Extra Point To be Noted
+	git rebase – -abort =>  git absorb will automatically identify which commits are safe to modify, and which staged changes belong to each of those commits. It will then write fixup! commits for each of those changes. With the --and-rebase flag, these fixup commits will be automatically integrated into the corresponding ones
+	
+	
+	
+	git rebase – -continue =>  Restart the rebasing process after having resolved a merge conflict.
+	
+	
+	
+	
+
+What is diffrent b/w Merge and ReBase
+	https://www.geeksforgeeks.org/git-difference-between-merging-and-rebasing/
+
+
+
+
+
+
+
+
+Index : 
+	The Git index is used as a staging area between your working directory and your remote repository. It is used to build up a set of changes that you want to commit together.
+	Git doesn't have a dedicated staging directory where it can store some objects representing file changes (blobs). Instead of this, it uses a file called index
+	
+
+
+
+Stage | Index  . git stash - How to Save Your Changes Temporarily: 
+	When you stage a file in Git, you instruct Git to track changes to the file in preparation for a commit. To instruct Git to disregard changes to a file, and not include it in your next commit, unstage the file. To remove files from stage use reset HEAD , where HEAD is the last commit of the current branch. Staged means that you have marked a modified file in its current version to go into your next commit snapshot
+	git stash temporarily shelves (or stashes) changes you've made to your working copy so you can work on something else, and then come back and re-apply them later on
+	Git stash stores the changes you made to the working directory locally (inside your project's .git directory; /.git/refs/stash , to be precise) and allows you to retrieve the changes when you need them. It's handy when you need to switch between contexts
+	
+	Command =>
+		git stash    | for save your all local changes/modified file into staging directory
+		
+		git stash --include-untracked  |  for save your all local changes/modified or Add/new / Untracked  file into staging directory
+		
+		git stash pop  | For get / revert chnages from your staging directory which one you have saveed  . Continuing Where You Left Off
+		
+		git stash pop stash@{2}  | Continuing Where You Left Offv for particular staging
+		 
+		git stash save "My Simple Stage"   | Save the chnages in staging are with your own message
+		
+		git stash list    |   Check the stored stashes
+		
+		git stash show   |  Track the stashes and their changes
+		
+		git stash drop   |  Delete a most recent stash from the queue
+		
+		git stash clear   |  Delete all the available stashes at once
+		
+		git stash branch   |  Stash work on a separate branch
+		
+		
+	
+
+
+
+
+Commit :
+	If you want to commit / stag eyour chnage into local git DB / repositoty
+	
+	Command =>
+		git commit -m"Your Commit msg"
+
+		git commit --amend -m "New and correct message"  | Amend / update the commit message for your last commit
+
+
+
+
+Cherry-pick Commit command
+	With the "cherry-pick" command, Git allows you to integrate selected, individual commits from any branch into your current HEAD branch..
+	
+	Command =>
+		git cherry-pick <af02e0b-yourCommitID>
+		
+
+
+
+
+
+What is Diffrent b/w git Stage and Commit
+	Staged means that you have marked a modified file in its current version to go into your next commit snapshot
+	
+	Committed means that the data is safely stored in your local database.
+
+
+
+
+
+HEAD : 
+
+
+
+
+
+
+Push  :
+
+
+
+
+
+
+Reset / Restore  :
+	Command => 
+		git restore . 
+		
+		OR
+		
+		git reset --hard
+		
+		OR
+		
+		git restore index.html    | Reset all chnages into particular file
+
+
+
+
+
+
+
+
+
+Undoing the Last Commit |  How do I remove a commit | How to  reset the commit 
+	To remove the last commit from git
+	
+		Command =>
+			 git reset --hard HEAD^     |     If you are removing multiple commits from the top
+			
+			 git reset --hard HEAD~2    |     If you want to remove the last two commits. You can increase the number to remove even more commits
+			 
+			 git reset --soft HEAD~'    |     The last commit that has not been pushed yet can be undone and his command undoes the latest commit, keeps the changes in place, and reverts the files back to the staging area
+
+			 git reset --soft HEAD~1    |     Undoing the Last Commit and if you want to chnages in local/working directory
+			 
+			 git reset --hard HEAD~1	|     Undoing the Last Commit and if you not want the chnages in local/working directory
+			 
+			 git reset --hard 0ad5a7a6   | Undoing the Commit by CommitID
+
+
+
+
+
+
+How to Stage your local chnages and keep it for future as backup and start working into others issue
+	There is two way to achive it	
+	1. Stage all your chnage and rebase again
+		i.   Android Studio
+		ii.  Select Project 
+		iii. Git 
+		iv.  Stage Changes 
+		v.   <Name OF your Stage> 
+		
+		OR
+		
+		Command =>
+			git stash
+		
+		
+	2. Commit yout changes but not push on remote servre
+		i.   Do the multiple commit but not push on remote server
+		ii.  
+		iii. git cherry-pick <sha id of the commit>
+
+	
+	
+	
+	
+	
+How to push spesific commit to remote server	
+	Using git Cherry Pick command & commit ID
+	
+	Command =>
+		git cherry-pick <sha id of the commit>
+		git push
+	
+
+
+
+
+
+diff :
+
+
+
+
+
+TAG : 
+
+
+PATCH
+
+
+Clean
+
+
+
+prune :
+	Use prune to Clean Up Remote Branches in Git
+	
+	
+bisect :
+	Using git bisect to Quickly Find Bugs	
+
+
+Squash Commits (Multiple Commit)
+	To "squash" in Git means to combine multiple commits into one. The act of "squashing" your commits means that you combine multiple existing commits into a single one
+
+
+
+
+How to Rename a Local Branch in Git
+	#Renaming local branches in Git is very easy. If you want to rename the current HEAD branch
+		git branch -m <new-name> 
+		
+	#If you want to rename a different local branch (that is NOT currently checked out):
+		git branch -m <old-name> <new-name>	
+	
+
+
+How to Rename a Remote Branch in Git
+	# First, delete the current / old branch:
+		git push origin --delete <old-name>
+
+	# Then, simply push the new local branch with the correct name:
+		git push -u origin <new_name>
+		
+
+
+
+
+
+
+
+
+
+
+Git Cheat Sheet
+1. Git configuration
+
+Git config
+	Get and set configuration variables that control all facets of how Git looks and operates.
+
+	Set the name:
+		$ git config --global user.name "User name"
+
+	Set the email:
+		$ git config --global user.email "himanshudubey481@gmail.com"
+	Set the default editor:
+		$ git config --global core.editor Vim
+
+
+Check the setting:
+		$ git config -list
+
+Git alias
+	Set up an alias for each command:
+		$ git config --global alias.co checkout
+		$ git config --global alias.br branch
+		$ git config --global alias.ci commit
+		$ git config --global alias.st status
+
+
+
+
+
+
+
+2. Starting a project
+Git init
+	Create a local repository:
+		$ git init
+		
+Git clone
+	Make a local copy of the server repository.
+		$ git clone <gitRepoURL>
+	
+	Make a local copy of the server repository from specific branch.
+		git clone --branch <branchname> <gitRepoURL>
+	
+	if you want to clone the repository into a directory named something other than libgit2, you can specify the new directory name as an additional argument:
+		$ git clone <gitRepoURL> <yourFolderName> 
+
+
+
+
+
+
+
+3. Local changes
+Git add
+	Add a file to staging (Index) area:
+		$ git add <yourFilename>
+		
+	Add all files of a repo to staging (Index) area:
+		$ git add*
+		
+		OR
+		
+		$ git add .
+		
+Git commit
+	Record or snapshots the file permanently in the version history with a message.
+	$ git commit -m " Commit Message"
+
+
+
+
+
+
+4. Track changes
+Git diff
+	Track the changes that have not been staged: 
+		$ git diff
+		
+	Track the changes that have staged but not committed:
+		$ git diff --staged
+	
+	Track the changes after committing a file:
+	$ git diff HEAD
+	
+	
+	Track the changes between two commits:
+	$ git diff Git Diff Branches:
+	$ git diff < branch 2>
+	
+Git status
+	Display the state of the working directory and the staging area.
+		$ git status
+		
+	Git show Shows objects:
+		$ git show
+
+
+
+
+
+
+
+5. Commit History
+Git log
+	Display the most recent commits and the status of the head:
+		$ git log
+		
+	Display the output as one commit per line:
+		$ git log -oneline
+		
+	Displays the files that have been modified:
+		$ git log -stat
+		
+	Display the modified files with location:
+		$ git log -p
+		
+Git blame
+	Display the modification on each line of a file:
+		$ git blame <file name>
+
+
+
+
+
+
+6. Ignoring files
+.gitignore
+	Specify intentionally untracked files that Git should ignore. Create .gitignore:
+		$ touch .gitignore 
+		
+		List the ignored files:
+		$ git ls-files -i --exclude-standard
+	
+	
+
+
+	
+	
+	
+7. Branching
+	Git branch Create branch:
+	$ git branch <yourBranchName>
+	
+	List Branch:
+		$ git branch --list 
+	
+	
+	Delete a local Branch:
+	$ git branch -d <yourBranchName> 
+	
+	OR
+	
+	git branch -D <yourBranchName>
+	
+	OR 
+	
+	$ git branch --delete  <yourBranchName>
+	
+	
+	Delete a remote Branch:
+	$ git push origin -delete <yourBranchName>
+	
+	OR
+	
+	$ git push origin -d <yourBranchName>
+	
+
+	Rename your local current Branch:
+	$ git branch -m <yourNewBranchName>
+	
+	Rename your remote Branch:
+	git branch -m <old-name> <new-name>
+	
+	
+Git checkout
+	Switch between branches in a repository.
+	Switch to a particular branch:
+		$ git checkout <yourBranchName>
+		
+	Create a new branch and switch to it:
+	$ git checkout -b Checkout a Remote branch:
+	$ git checkout
+	
+	
+	
+Git stash
+	Switch branches without committing the current branch. Stash current work:
+		$ git stash
+	
+	Saving stashes with a message:
+		$ git stash save "your stage message"
+		
+	Check the stored stashes:
+		$ git stash list
+	
+	Re-apply the changes that you just stashed:
+		$ git stash apply
+		
+	Track the stashes and their changes:
+		$ git stash show
+		
+	Re-apply the previous commits:
+		$ git stash pop
+		
+	Delete a most recent stash from the queue:
+		$ git stash drop
+		
+	Delete all the available stashes at once:
+		$ git stash clear
+		
+	Stash work on a separate branch:
+		$ git stash branch
+		
+Git cherry pic
+	Apply the changes introduced by some existing commit:
+		$ git cherry-pick <CommitID>
+	
+	
+	
+	
+8. Merging
+Git merge
+	Merge the branches:
+		$ git merge
+		
+	Merge the specified commit to currently active branch:
+		$ git merge
+	
+Git rebase
+	Apply a sequence of commits from distinct branches into a final commit.
+		$ git rebase
+	
+	Continue the rebasing process:
+		$ git rebase -continue 
+		
+	Abort the rebasing process:
+		$ git rebase --skip
+	
+	Git interactive rebase
+	Allow various operations like edit, rewrite, reorder, and more on existing commits.
+		$ git rebase -i
+
+
+
+
+
+
+9. Remote
+Git remote
+	Check the configuration of the remote server:
+		$ git remote -v
+		
+	Add a remote for the repository:
+	$ git remote add Fetch the data from the remote server:
+	$ git fetch
+	
+	Remove a remote connection from the repository:
+		$ git remote rm
+	
+	Rename remote server:
+		$ git remote rename
+	
+	Show additional information about a particular remote:
+		$ git remote show
+	
+	Change remote:
+		$ git remote set-url
+	
+	Git origin master
+	Push data to the remote server:
+		$ git push origin master 
+	
+	Pull data from remote server:
+		$ git pull origin master
+
+
+
+
+
+
+
+10. Pushing Updates
+Git push
+	Transfer the commits from your local repository to a remote server. Push data to the remote server:
+		$ git push origin master Force push data:
+		$ git push -f
+		
+	Delete a remote branch by push command:
+		$ git push origin -delete <edited>
+
+
+
+
+
+
+
+11. Pulling updates
+Git pull
+	Pull the data from the server:
+		$ git pull origin master
+		
+	Pull a remote branch:
+		$ git pull
+		
+Git fetch
+	Download branches and tags from one or more repositories. Fetch the remote repository:
+		$ git fetch< repository Url> Fetch a specific branch:
+		$ git fetch
+		
+	Fetch all the branches simultaneously:
+		$ git fetch -all
+		
+	Synchronize the local repository:
+		$ git fetch origin
+
+
+
+
+
+
+12. Undo changes
+Git revert
+	Undo the changes:
+		$ git revert
+		
+	Revert a particular commit:
+		$ git revert <commit>
+		
+Git reset
+	Reset the changes:
+	$ git reset -hard
+	$ git reset -soft:
+	$ git reset --mixed
+
+
+
+
+13. Removing files
+Git rm
+	Remove the files from the working tree and from the index:
+		$ git rm <file Name>
+		
+	Remove files from the Git But keep the files in your local repository:
+		$ git rm --cached

@@ -1,0 +1,107 @@
+1. What is kotlin:
+	Kotlin is an open-source, general/multi -purpose, statically typed programming language which is 100% opratable with Java and eliminate lot of boilor plate of code or it provides more concise code. Kotlin eliminates some of the redundancy in the basic syntax.
+
+	
+2. statically-typed :	A statically-typed language is a language (such as Java, C, or C++) where variable types are known at compile time and non statically-typed language is like python, javascript
+
+
+
+
+
+3.Scope functions
+Scope functions make code more readable, clear and concise.
+Object reference – ‘this’ and ‘it’.
+Return value – context object and lambda result.
+
+let    => (it & lamda result) 	  : 	working with nullable objects to avoid NullPointerException.
+run    => (this & lamda result)	  : 	operate on nullable object, executing lambda expressions.
+with   => (this & lamda result)   : 	operating on non-null objects.
+
+apply  => (this & Context Object) : 	changing object configuration & property.
+also   => (it & context Object)   : 	adding additional operations.
+
+
+Example: 
+
+btnLogin.apply {
+      setOnClickListener {
+          //perform your task on onClick
+        }
+ }
+
+
+
+Intent = Intent(context, DrivingReportsActivity::class.java).apply {
+            putExtra(DRIVING_REPORT_ENTRY_POINT, entryPoint.ordinal)
+            putExtra(DRIVING_REPORT_SECTION_NUMBER, sectionNumber)
+            putExtra(ECO_PROFILE, profile)
+}
+
+
+
+googleMap.apply {
+	uiSettings.isCompassEnabled = false
+      	mapType = sharedPref[PREFS_GMAP_TYPE] ?: GoogleMap.MAP_TYPE_NORMAL
+      	sTrafficEnabled = sharedPref[PREFS_GMAP_TRAFFIC] ?: false
+}
+
+
+
+
+Intent(requireContext(), MainActivity::class.java).also { startActivity(it) }
+
+
+
+
+binding = XYZBinding.inflate(inflater, container, false).also {
+            it.lifecycleOwner = viewLifecycleOwner
+            it.viewModel = viewModel
+    }
+
+
+
+
+mChipIcon?.let {
+     chipIcon = ContextCompat.getDrawable(context, it)
+     chipIconTint = ColorStateList(chipStates, intArrayOf(deepGray, white))
+}
+
+
+
+chip.apply {
+     mChipIcon?.let {
+           chipIcon = ContextCompat.getDrawable(context, it)
+           chipIconTint = ColorStateList(chipStates, intArrayOf(deepGray, white))
+        }
+   layoutParams = params
+   isCheckable = true
+   isCheckedIconVisible = false
+}
+
+
+
+with(binding) {
+      lastTripBtn.setOnClickListener {
+          activity.trackClickEvent(
+              clickName = LAST_TRIP_DETAILS,
+              linkType = LinkType.CONTENT
+            )
+         tartDrivingReportActivity(DrivingReportsEntryPoint.TRIP_ACCESS)
+       }
+            
+	ecoContainer.setOnClickListener {
+                startDrivingReportActivity(DrivingReportsEntryPoint.ECO_ACCESS)
+        }
+}
+
+
+
+
+viewModel.let {
+    it.apply { 
+        checkPermission()
+        checkDeviceLocationSettings()
+        checkPrivacyPolicy()
+        checkPrivacyMode()
+    }
+}
