@@ -1,6 +1,7 @@
-There is two type of testing in Android 
-1. Unit Testing (Business logic only) - WhiteBox testing
-2. Instrumention Testing (Android Compoment / framework based) - WhiteBox testing
+There is Three type of testing in Android 
+1. Unit Testing or samll Testing #70%:  (Business logic only): WhiteBox testing which writen in test folder
+2. Integraction Testing or medium testing #20%: 
+2. Instrumention Testing or UI Testing #10% : (Android Compoment / framework based) - WhiteBox testing which is writen in androidTest folder
 Not: For blackBox Testing uses Appium Framwork
 
 
@@ -14,9 +15,10 @@ Not: For blackBox Testing uses Appium Framwork
 	vi. 	We will use JUnit, Mockk & Mockito ( mockito-kotlin ) and hamcrest to achieve this.
 	vii.	The test directory should contain the tests that run on your local machine, such as unit tests. In contrast to the above, these can be tests that run on a local JVM.
 	viii.	Unit / Local Test Tools / Framwork: 
-				i.		JUnit : JUnit 4 framework
-				ii.		Mockk  / Mockito framework 
-				iii. 	Robolectric
+				i.		JUnit : JUnit is Unit Testing framework
+				ii.		Mockk/Mockito:  It is used for Mock the Object 
+				iii. 	Robolectric 
+				iv. 	Truth: it is basically assertion / output validation framwork or library
 				
 
 2. Instrumentation / Android Framwork Based Test => src/androidTest: 
@@ -1132,8 +1134,99 @@ Workflow of Espresso Testing Framework
 					   }
 					   
 					}
+______________________________________________________________________________________________________________________________________
 
+How to run multiple Activty and fragment using Test Suit class
+
+	1. Write a class which annotate with @RunWith(Suite::class)  and @Suite.SuiteClasses and putl your list of test classses
+				
+				import org.junit.runner.RunWith
+				import org.junit.runners.Suite
+
+				@RunWith(Suite::class)
+				@Suite.SuiteClasses(
+					//Add your any number of test class here if needed
+					LoginActivityInstrumentationTest::class,
+					LoginActivityInstrumentationTestNew::class
+
+				)
+				public class EspressoTestSuite {
+					//This class will be empty
+				}
+
+
+______________________________________________________________________________________________________________________________________
+How  we create actvity and Fragment scenario
+	There is multiple way to create scenario for your activity and fragment
+	
+	Activty
+			1. Options - 1
+				
+					private lateinit var activityScenario: ActivityScenario<LoginActivity>
+					
+					@Before
+					fun setUp() {
+						// Launch the LoginActivity before each test
+						activityScenario = ActivityScenario.launch(LoginActivity::class.java)
+					}
+
+					@After
+					fun tearDown() {
+						// Close the activity after each test
+						activityScenario.close()
+					}
+			
+			2. Options - 2
+			
+					 private var activityScenario: ActivityScenario<LoginActivity>? = ActivityScenario.launch(LoginActivity::class.java, null)
+
+	Fragment:
+
+
+	
 __________________________________________________________________________________________________________________________________________
-__________________________________________________________________________________________________________________________________________
+How do we write our own / custome / Base ActivityScenario Rule for all child testClass / Activivity
+		1. Create a class which  implement the TestRule parrent class
+		
+						import android.app.Activity
+						import androidx.test.core.app.ActivityScenario
+						import org.junit.rules.TestRule
+						import org.junit.runner.Description
+						import org.junit.runners.model.Statement
+
+						class ActivityScenarioRule(private val activityClass: Class<out Any>) : TestRule {
+
+							private var activityScenario: ActivityScenario<Activity>? = null
+
+							fun getActivityScenario(): ActivityScenario<Activity> {
+								return activityScenario ?: throw IllegalStateException("ActivityScenario not initialized")
+							}
+
+							override fun apply(base: Statement, description: Description): Statement {
+
+								return object : Statement() {
+									override fun evaluate() {
+										// Launch the activity before running the test
+										@Suppress("UNCHECKED_CAST")
+										activityScenario = ActivityScenario.launch(activityClass as Class<Activity>)
+										try {
+											// Run the test
+											base.evaluate()
+										} finally {
+											// Close the activity after running the test
+											activityScenario?.close()
+										}
+									}
+								}
+							}
+						}
+						
+		2. Uses below line of code to create ActivityScenario based on your custome class
+				  @get:Rule
+				  val activityScenarioRule = ActivityScenarioRule(LoginActivity::class.java)
+		
+_________________________________________________________________________________________________________________________________________
+
+
 __________________________________________________________________________________________________________________________________________
 
