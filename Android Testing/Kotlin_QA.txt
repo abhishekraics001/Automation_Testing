@@ -7,7 +7,6 @@
 
 
 
-
 3.Scope functions
 Scope functions make code more readable, clear and concise.
 Object reference – ‘this’ and ‘it’.
