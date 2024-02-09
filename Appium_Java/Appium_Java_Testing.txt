@@ -496,17 +496,48 @@ https://github.com/appium/appium/tree/master/packages/appium/sample-code/apps
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------
 Appium Java - Desider Capabilities
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+Appium Java - Desider Capabilities
 ---------------------------------------------------------------------------------
-DesiredCapabilities cap = new DisiredCapabilities();
+      @Test
+	public void lunchApp(){
+		DesiredCapabilities cap = new DisiredCapabilities();
 
-cap.setCapability(MobileCapabilityType.PLATFORM_NAME, MobilePlatform.ANDROID);
-cap.setCapability("appPackage", "io.appium.apis");
-cap.setCapability("appActivity", "io.appium.android.apis.ApiDemos");
+		cap.setCapability(MobileCapabilityType.PLATFORM_NAME, MobilePlatform.ANDROID);
+		cap.setCapability(MobileCapabilityType.NO_RESET, true)
+		cap.setCapability("appPackage", "io.appium.apis");
+		cap.setCapability("appActivity", "io.appium.android.apis.ApiDemos");
+		cap.setCapability(MobileCapabilityType.DEVICE_NAME, "emulator-5554")
 
-AndroidDriver<MobileElement> driver = new AndroidDriver<MobileElement>(new URL("https://127.0.0.1:4723/wd/hub/"), cap)
+		AndroidDriver driver = new AndroidDriver(new URL("https://127.0.0.1:4723/wd/hub/"), cap)
+		driver.manage().timeouts().implicilityWait(25, TimeUnit.SECONDS);
+		
+		WebElement text = driver.findElement(AppiumBy.xpath("//android.widget.TextView[@content-desc=\"Text\"]"));
+		System.out.println(text.getText());
+		text.click();
+	}
+	
+	
+	//Using BaseOptions
+	@Test
+	public void lunchApp(){
+		var options = new BaseOptions()
+					.amend("appium:automationName", "uiautomator2")
+					.amend("platformName", "Android")
+					.amend("appium:deviceName", "vivi 22")
+					//.amend("appium:ensureWebviewsHavePages", true)
+					//.amend("appium:nativeWebScreenshot", true)
+					.amend("appium:newCommandTimeout", 3600);
+					//.amend("appium:connectHardwareKeyboard", true);
 
-driver.manage().timeouts().implicilityWait(25, TimeUnit.SECONDS);
 
+			URL getUrl = new URL("http://127.0.0.1:4723");
+			driver = new AndroidDriver(getUrl, options);
+
+			WebElement text = driver.findElement(AppiumBy.xpath("//android.widget.TextView[@content-desc=\"Text\"]"));
+			System.out.println(text.getText());
+	}
 
 
 
@@ -544,28 +575,8 @@ Create Driver Session
 Start_Stop Appium Progammatically  using TestNG
 ----------------------------------------------------------------------------------------------
 public class StartAppiumServer{
-
-	public static AppiumDriverLocalService service;
-	public static String NodeJSExePath = "c:\\programfile\\nodejs\\node.exe"
-	public static String AppiumJSPath = "c:\\users\\userName\\AppData\\Local\\Program\\Appium Server GUI\\resources\\app\\node_modules\\appium\\build\\lib\\main.js"
 	
-
-	@BeforeTest
-	publicvoid StartAppiumServer(){
-			AppiumDriverLocalService service = AppiumDriverLocalService.buildService(new AppiumServiceBuilder()
-									.usingDriverExecutable(new File(NodeJSExePath))
-									.withAppiumJS(new File("AppiumJSPath"))	
-									.withIPAddress("serverIPAddress")					//Like * -:  "127.0.0.1"
-									.withArgument(GeneralServiceFlag.BASEPATH, "/wd/hub")
-									.usingPort(4723)
-									.withLogFile(new File("logFileURL")) 				//Like * -:	  "c:\\users\\MYAppiumLogFile.text"
-									);
-									
-			service.start();
-	}
-	
-	
-	
+	//Using DesiredCapabilities
 	@Test
 	public void lunchApp(){
 		DesiredCapabilities cap = new DisiredCapabilities();
@@ -577,16 +588,32 @@ public class StartAppiumServer{
 		cap.setCapability(MobileCapabilityType.DEVICE_NAME, "emulator-5554")
 
 		AndroidDriver driver = new AndroidDriver(new URL("https://127.0.0.1:4723/wd/hub/"), cap)
-
 		driver.manage().timeouts().implicilityWait(25, TimeUnit.SECONDS);
 		
-		
-		WebElement text = driver.findElement(By.XPath("//android.wedget.TextView[@content-desc=\"Text\"]"))\
+		WebElement text = driver.findElement(AppiumBy.xpath("//android.widget.TextView[@content-desc=\"Text\"]"));
 		System.out.println(text.getText());
-		
 		text.click();
 	}
 	
+	//Using BaseOptions
+	@Test
+	public void lunchApp(){
+		var options = new BaseOptions()
+					.amend("appium:automationName", "uiautomator2")
+					.amend("platformName", "Android")
+					.amend("appium:deviceName", "vivi 22")
+					//.amend("appium:ensureWebviewsHavePages", true)
+					//.amend("appium:nativeWebScreenshot", true)
+					.amend("appium:newCommandTimeout", 3600);
+					//.amend("appium:connectHardwareKeyboard", true);
+
+
+			URL getUrl = new URL("http://127.0.0.1:4723");
+			driver = new AndroidDriver(getUrl, options);
+
+			WebElement text = driver.findElement(AppiumBy.xpath("//android.widget.TextView[@content-desc=\"Text\"]"));
+			System.out.println(text.getText());
+	}
 	
 	@AfterTest
 	public void TearDown(){
@@ -602,6 +629,77 @@ public class StartAppiumServer{
 
 
 
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+public class StartAppiumServerProgametically {
+
+
+    AppiumDriver driver;
+
+    public static AppiumDriverLocalService service;
+
+    //Options:  Node JS file path is Options and required only in case of your node and appium is on different server
+    public static String NodeJSExePath = "C:\\Program Files\\nodejs\\node.exe";
+
+    //Options:  Appium JS file path is Options and required only in case of your node and appium is on different server
+    //public static String NodeJSMainPath = "C:\\Users\\T0185CK\\AppData\\Roaming\\npm\\node_modules\\appium\\lib\\appium.js";
+    public static String NodeJSMainPath = "C:\\Users\\T0185CK\\AppData\\Roaming\\npm\\node_modules\\appium";
+
+    //Server IP address where Appium Server is Running
+    public static String ServerIPAddress = "127.0.0.1"; // Default Port
+
+    // Server PORT  where Appium Server is Running
+    public static Integer ServerPORT = 4723;
+
+    // Log file path where you want to store Appium Server log
+    public static String AppiumLogPath = "D:\\appiumlog.txt";
+
+
+    @BeforeTest
+    public void StartAppiumServer(){
+         service = AppiumDriverLocalService.buildService(new AppiumServiceBuilder()
+                        .usingDriverExecutable(new File(NodeJSExePath))
+                        .withAppiumJS(new File(NodeJSMainPath))
+                        .withIPAddress(ServerIPAddress)
+                        .usingPort(ServerPORT)
+                        .withTimeout(Duration.ofSeconds(15))
+                        .withLogFile(new File(AppiumLogPath))
+        );
+
+        service.start();
+    }
+
+
+
+    @Test
+    void TestApp() throws MalformedURLException {
+        DesiredCapabilities cap = new DesiredCapabilities();
+
+        cap.setCapability("platformName", MobilePlatform.ANDROID);
+        cap.setCapability("appium:automationName", "uiautomator2");
+        cap.setCapability("appium:deviceName", "vivi 22");
+        cap.setCapability("appPackage", "io.appium.android.apis");
+        cap.setCapability("appActivity", "io.appium.android.apis.ApiDemos");
+
+        driver = new AndroidDriver(new URL("http://0.0.0.0:4723"), cap);
+
+        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+
+        WebElement text = driver.findElement(AppiumBy.xpath("//android.widget.TextView[@content-desc=\"Text\"]"));
+        System.out.println(text.getText());
+    }
+
+    @AfterTest
+    public void TearDown(){
+        driver.quit();
+        if(service.isRunning()){
+            service.stop();
+        }
+    }
+}
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+
 
 
 
@@ -610,14 +708,14 @@ public class StartAppiumServer{
 -----------------------------------------------------------------------------------------------------------------------------------------------------
 DesiredCapabilities
 
-DesiredCapabilities cap = new DisiredCapabilities();
+		DesiredCapabilities cap = new DesiredCapabilities();
+        cap.setCapability("platformName", MobilePlatform.ANDROID);
+        cap.setCapability("appium:automationName", "uiautomator2");
+        cap.setCapability("appium:deviceName", "vivi 22");
+        cap.setCapability("appPackage", "io.appium.android.apis");
+        cap.setCapability("appActivity", "io.appium.android.apis.ApiDemos");
 
-cap.setCapability(MobileCapabilityType.PLATFORM_NAME, MobilePlatform.ANDROID);
-cap.setCapability("appPackage", "io.appium.apis");
-cap.setCapability("appActivity", "io.appium.android.apis.ApiDemos");
-
-AndroidDriver<MobileElement> driver = new AndroidDriver<MobileElement>(new URL("https://127.0.0.1:4723/wd/hub/"), cap)
-
+        driver = new AndroidDriver(new URL("http://0.0.0.0:4723"), cap);
 
 
 
@@ -851,26 +949,42 @@ Appium Important Methods to Interact with an App
 ----------------------------------------------------------------------------------------------
 public class StartAppiumServer{
 
-	public static AppiumDriverLocalService service;
-	public static String NodeJSExePath = "c:\\programfile\\nodejs\\node.exe"
-	public static String NodeJSMainPath = "c:\\users\\userName\\AppData\\Local\\Program\\Appium Server GUI\\resources\\app\\node_modules\\appium\\build\\lib\\main.js"
-	
+ AppiumDriver driver;
 
-	@BeforeTest
-	publicvoid StartAppiumServer(){
-			AppiumDriverLocalService service = AppiumDriverLocalService.buildService(new AppiumServiceBuilder()
-									.usingDriverExecutable(new File(NodeJSExePath))
-									.withAppiumJS(new File("AppiumJSPath"))	
-									.withIPAddress("serverIPAddress")					//Like * -:  "127.0.0.1"
-									.withArgument(GeneralServiceFlag.BASEPATH, "/wd/hub")
-									.usingPort(4723)
-									.withLogFile(new File("logFileURL")) 				//Like * -:	  "c:\\users\\MYAppiumLogFile.text"
-									);
-									
-		service.start();
-	}
-	
-	
+    public static AppiumDriverLocalService service;
+
+    //Options:  Node JS file path is Options and required only in case of your node and appium is on different server
+    public static String NodeJSExePath = "C:\\Program Files\\nodejs\\node.exe";
+
+    //Options:  Appium JS file path is Options and required only in case of your node and appium is on different server
+    //public static String NodeJSMainPath = "C:\\Users\\T0185CK\\AppData\\Roaming\\npm\\node_modules\\appium\\lib\\appium.js";
+    public static String NodeJSMainPath = "C:\\Users\\T0185CK\\AppData\\Roaming\\npm\\node_modules\\appium";
+
+    //Server IP address where Appium Server is Running
+    public static String ServerIPAddress = "127.0.0.1"; // Default Port
+
+    // Server PORT  where Appium Server is Running
+    public static Integer ServerPORT = 4723;
+
+    // Log file path where you want to store Appium Server log
+    public static String AppiumLogPath = "D:\\appiumlog.txt";
+
+
+
+	 @BeforeTest
+		public void StartAppiumServer(){
+			 service = AppiumDriverLocalService.buildService(new AppiumServiceBuilder()
+							.usingDriverExecutable(new File(NodeJSExePath))
+							.withAppiumJS(new File(NodeJSMainPath))
+							.withIPAddress(ServerIPAddress)
+							.usingPort(ServerPORT)
+							.withTimeout(Duration.ofSeconds(15))
+							.withLogFile(new File(AppiumLogPath))
+			);
+
+			service.start();
+		}
+		
 	
 	@Test
 	public void lunchApp(){
@@ -979,25 +1093,7 @@ Syntax
 Example:
 public class StartAppiumServer{
 
-	public static AppiumDriverLocalService service;
-	public static String NodeJSExePath = "c:\\programfile\\nodejs\\node.exe"
-	public static String NodeJSMainPath = "c:\\users\\userName\\AppData\\Local\\Program\\Appium Server GUI\\resources\\app\\node_modules\\appium\\build\\lib\\main.js"
-	
 
-	@BeforeTest
-	publicvoid StartAppiumServer(){
-			AppiumDriverLocalService service = AppiumDriverLocalService.buildService(new AppiumServiceBuilder()
-									.usingDriverExecutable(new File(NodeJSExePath))
-									.withAppiumJS(new File("AppiumJSPath"))	
-									.withIPAddress("serverIPAddress")					//Like * -:  "127.0.0.1"
-									.withArgument(GeneralServiceFlag.BASEPATH, "/wd/hub")
-									.usingPort(4723)
-									.withLogFile(new File("logFileURL")) 				//Like * -:	  "c:\\users\\MYAppiumLogFile.text"
-									);
-									
-		service.start();
-	
-	}
 	
 	
 	
